@@ -2,8 +2,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 70px;
-    border-bottom: 1px solid tomato;
+    height: 9vh;
+    border-bottom: 2px solid #E4004B;
 }
 
 .header .logo {
@@ -50,6 +50,10 @@
 
 .header nav ul li a:last-child p {
     color: #FF6916;
+}
+
+.header .active {
+    border-bottom: 2px solid black;
 }
 
 /* RESPONSIVE */
@@ -100,16 +104,16 @@
     display: none;
 }
 
-.header input:checked~label .hamburguer {
+.header nav.toggle label .hamburguer {
     transform: rotate(45deg);
 }
 
-.header input:checked~label .hamburguer:before {
+.header nav.toggle label .hamburguer:before {
     transform: rotate(90deg);
     top: 0;
 }
 
-.header input:checked~label .hamburguer:after {
+.header nav.toggle label .hamburguer:after {
     transform: rotate(90deg);
     bottom: 0;
 }
@@ -119,29 +123,27 @@
         display: block;
     }
 
-    .header nav ul {
-        display: none;
-    }
-
-    .header input:checked~ul {
-        display: block;
-    }
-
     .header nav {
         position: absolute;
-        top: 9px;
-        right: 20px;
+        top: .1vh;
+        right: 0;
         z-index: 1;
     }
 
     .header nav ul {
-        width: 280px;
-        border: 1px solid tomato;
+        display: none;
+        width: 290px;
+        background-color: aliceblue;
+    }
+
+    .header nav.toggle ul {
+        display: block;
     }
 
     .header nav ul a {
         text-align: center;
-        padding: 20px;
+        padding: 20px 20px 2px;
+        margin-bottom: 18px;
         display: block;
     }
 

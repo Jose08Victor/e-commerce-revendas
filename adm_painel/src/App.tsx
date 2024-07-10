@@ -3,22 +3,36 @@ import { Header } from "./components/header"
 import "./styles.css"
 import { AddProduct } from "./pages/addProduct"
 import { ProductList } from "./pages/productList"
+import { SideBar } from "./components/sideBar"
 
 function App () {
+
+  const url = "http://localhost:4000";
+
   return (
     <BrowserRouter>
 
       <Header />
 
-      <Routes>
-        <Route path="/" element={ <AddProduct marca={"avon"} /> } />
-        <Route path="/avon/lista-dos-produtos" element={ <ProductList marca={"avon"} produtos={ "disponivel" } /> } />
-        <Route path="/avon/produtos-indisponiveis" element={ <ProductList marca={"avon"} produtos={ "indisponivel" } /> } />
+      <main>
+        <SideBar />
 
-        <Route path="/natura" element={ <AddProduct marca={"natura"} /> } />
-        <Route path="/natura/lista-dos-produtos" element={ <ProductList marca={"natura"} produtos={ "disponivel" } /> } />
-        <Route path="/natura/produtos-indisponiveis" element={ <ProductList marca={"natura"} produtos={ "indisponivel" } /> } />
-      </Routes>
+        <Routes>
+          <Route path="/avon/adicionar-produto" element={ <AddProduct url={ url } marca={ "avon" } /> } />
+
+          <Route path="/avon/lista-dos-produtos" element={ <ProductList url={ url } marca={ "avon" } produtos={ "disponivel" } /> } />
+
+          <Route path="/avon/produtos-indisponiveis" element={ <ProductList url={ url } marca={ "avon" } produtos={ "indisponivel" } /> } />
+
+
+          <Route path="/natura/adicionar-produto" element={ <AddProduct url={ url } marca={ "natura" } /> } />
+
+          <Route path="/natura/lista-dos-produtos" element={ <ProductList url={ url } marca={ "natura" } produtos={ "disponivel" } /> } />
+
+          <Route path="/natura/produtos-indisponiveis" element={ <ProductList url={ url } marca={ "natura" } produtos={ "indisponivel" } /> } />
+        </Routes>
+      </main>
+
     </BrowserRouter>
   )
 }

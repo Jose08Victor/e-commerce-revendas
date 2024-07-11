@@ -6,7 +6,7 @@ const avonRouter = express.Router();
 
 //Image Storage Engine
 const storage = multer.diskStorage({
-    destination: "uploads",
+    destination: "uploads/avon",
     filename: (_, file, cb) => {
         return cb(null, `${Date.now()}${file.originalname}`)
     }

@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config"
 import avonRouter from "./routes/avonRoute.js";
+import naturaRouter from "./routes/naturaRoute.js";
 
 //app config
  const app = express();
@@ -17,7 +18,9 @@ connectDB();
 
 //API endpoints
 app.use("/api/avon", avonRouter)
-app.use("/images", express.static('uploads'))
+app.use("/images/avon", express.static('uploads/avon'))
+app.use("/api/natura", naturaRouter)
+app.use("/images/natura", express.static('uploads/natura'))
 
 app.get("/", (_, res) => {
     res.send("API Working")

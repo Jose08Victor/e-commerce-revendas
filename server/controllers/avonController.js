@@ -7,10 +7,10 @@ const addAvonProduct = async (req, res) => {
     const avon = new avonModel({
         name: req.body.name,
         image: image_filename,
-        old_price: req.body.old_price,
-        new_price: req.body.new_price,
+        price: req.body.price,
         category: req.body.category,
         quantity: req.body.quantity,
+        validity: req.body.validity
     })
     try {
         await avon.save();
@@ -21,7 +21,7 @@ const addAvonProduct = async (req, res) => {
     }
 }
 
-// quantity: { $gt: 0 } 
+
 const avonProductList = async (_, res) => {
     try {
         const avonProducts = await avonModel.find({})
@@ -39,7 +39,7 @@ const updateAvonProduct = async (req, res) => {
 
         const data = { ...req.body };
         if (req.file) {
-            fs.unlink(`uploads/${product.image}`, () => { });
+            fs.unlink(`uploads/avon/${product.image}`, () => { });
             data.image = `${req.file.filename}`;
         }
 
@@ -59,7 +59,7 @@ const deleteAvonProduct = async (req, res) => {
     try {
         const product = await avonModel.findById(req.params.id);
 
-        fs.unlink(`uploads/${product.image}`, () => { });
+        fs.unlink(`uploads/avon/${product.image}`, () => { });
 
         await avonModel.findByIdAndDelete(req.params.id);
 

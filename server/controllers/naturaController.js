@@ -2,14 +2,12 @@ import naturaModel from "../models/naturaModel.js";
 import fs from "fs";
 
 const addNaturaProduct = async (req, res) => {
-    let image_filename = `${req.file.filename}`;
-
     const natura = new naturaModel({
         name: req.body.name,
-        image: image_filename,
-        price: req.body.price,
+        image: req.file.filename,
+        price: Number(req.body.price),
         category: req.body.category,
-        quantity: req.body.quantity,
+        quantity: Number(req.body.quantity),
         validity: req.body.validity
     })
     try {

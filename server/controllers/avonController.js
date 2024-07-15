@@ -2,14 +2,12 @@ import avonModel from "../models/avonModel.js";
 import fs from "fs";
 
 const addAvonProduct = async (req, res) => {
-    let image_filename = `${req.file.filename}`;
-
     const avon = new avonModel({
         name: req.body.name,
-        image: image_filename,
-        price: req.body.price,
+        image: req.file.filename,
+        price: Number(req.body.price),
         category: req.body.category,
-        quantity: req.body.quantity,
+        quantity: Number(req.body.quantity),
         validity: req.body.validity
     })
     try {

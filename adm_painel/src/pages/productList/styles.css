@@ -1,0 +1,371 @@
+.products-list {
+    overflow: auto;
+    width: 100%;
+    position: relative;
+    
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 4px;
+        border-left: #E4004B 1px solid;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background-color: #E4004B;
+        border-radius: 25px;
+    }
+}
+
+.products-list .category-field {
+    display: flex;
+    align-items: center;
+    padding: 22px 22px 8px;
+    gap: 20px;
+    overflow-x: auto;
+    width: 90%;
+    margin: 0 auto 14px;
+
+    &::-webkit-scrollbar {
+        height: 2px;
+        background-color: #ddd;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background-color: #E4004B;
+        border-radius: 25px;
+    }
+}
+
+.products-list .category-field li {
+    border-radius: 20px;
+    border: 2px solid;
+    padding: 8px 15px;
+    letter-spacing: .8px;
+    color: aliceblue;
+    background-color: #E4004B;
+
+    &:hover {
+        color: #E4004B;
+        background-color: aliceblue;
+        border: 2px solid #E4004B;
+        cursor: pointer;
+    }
+}
+
+.products-list .list-table-format {
+    display: grid;
+    grid-template-columns: .5fr 2fr .5fr .6fr .5fr .5fr;
+    align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px solid #E4004B;
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+}
+
+.products-list .list-table-format:nth-child(2) {
+    font-weight: 800;
+    border-top: 1px solid #E4004B;
+    font-size: 15px;
+}
+
+.products-list .list-table .list-table-format img {
+    width: 68px;
+    max-height: 68px;
+    border: 1px solid #E4004B;
+    border-radius: 15px;
+}
+
+.products-list .list-table .list-table-format li:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+}
+
+.products-list .list-table .list-table-format li:last-child button {
+    width: 80px;
+    border-radius: 20px;
+    border: 2px solid;
+    padding: 8px;
+    color: aliceblue;
+    background-color: #E4004B;
+    font-weight: 500;
+
+    &:hover {
+        color: #E4004B;
+        background-color: aliceblue;
+        border: 2px solid #E4004B;
+        cursor: pointer;
+    }
+}
+
+.products-list .list-table .list-table-format li:last-child .removal-pop-up {
+    position: absolute;
+    width: 200px;
+    height: 94px;
+    right: -10px;
+    bottom: -10px;
+    background-color: aliceblue;
+}
+
+.products-list .list-table .list-table-format li:last-child .removal-pop-up button {
+    margin: 6px;
+}
+
+.products-list .list-table .editor-background {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.products-list .list-table .editor-background .editor-container {
+    width: 60%;
+    background-color: aliceblue;
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.products-list .list-table .editor-background .editor-container p {
+    font-weight: 700;
+    font-size: 13.2px;
+    text-align: left;
+    margin-bottom: 3px;
+}
+
+.products-list .list-table .editor-background .editor-container .editor {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.products-list .list-table .editor-background .editor-container .editor h1 {
+    font-size: 30px;
+}
+
+.products-list .list-table .editor-background .editor-container .editor img {
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.products-list .list-table .editor-background .editor-container .img-container {
+    display: flex;
+    justify-content: center;
+    gap: 8%;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.products-list .list-table .editor-background .editor-container .img-container img {
+    width: 150px;
+    height: 150px;
+    border-radius: 20px;
+}
+
+.products-list .list-table .editor-background .editor-container .img-container .arrow_icon {
+    width: 34px;
+    height: 34px;
+}
+
+.products-list .list-table .editor-background .editor-container .img-container p {
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.products-list .list-table .editor-background .editor-container .img-container .editor-img-upload label img {
+    cursor: pointer;
+    background-color: rgba(228, 0, 75, 0.25);
+}
+
+.products-list .list-table .editor-background .editor-container input,
+.products-list .list-table .editor-background .editor-container select {
+    height: 30px;
+    font-size: 15px;
+    font-family: "Nunito", sans-serif;
+    padding-left: 8px;
+    margin-bottom: 25px;
+}
+
+.products-list .list-table .editor-background .editor-container .editor-name,
+.products-list .list-table .editor-background .editor-container .editor-category-price,
+.products-list .list-table .editor-background .editor-container .editor-validity-quantity {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.products-list .list-table .editor-background .editor-container .editor-name input {
+    width: 100%;
+}
+
+.products-list .list-table .editor-background .editor-container .editor-category-price,
+.products-list .list-table .editor-background .editor-container .editor-validity-quantity {
+    display: flex;
+    justify-content: space-between;
+}
+
+.products-list .list-table .editor-background .editor-container .editor-category-price .editor-category select,
+.products-list .list-table .editor-background .editor-container .editor-validity-quantity .editor-validity input {
+    text-align: center;
+    width: 200px;
+}
+
+.products-list .list-table .editor-background .editor-container .editor-category-price .editor-price input,
+.products-list .list-table .editor-background .editor-container .editor-validity-quantity .editor-quantity input {
+    width: 120px;
+    text-align: center;
+}
+
+.products-list .list-table .editor-background .editor-container .editor-btn {
+    width: 150px;
+    font-size: 20px;
+    border-radius: 20px;
+    border: 2px solid;
+    padding: 15px;
+    color: aliceblue;
+    background-color: #E4004B;
+    align-self: center;
+
+    &:hover {
+        color: #E4004B;
+        background-color: aliceblue;
+        border: 2px solid #E4004B;
+        cursor: pointer;
+    }
+}
+
+@media (max-width: 900px) {
+    .products-list .list-table .editor-background .editor-container {
+        width: 80%;
+    }
+}
+
+@media (max-width: 700px) {
+    .products-list .category-field  {
+        width: 188%;
+        position: relative;
+        left: 6%;
+    }
+
+    .products-list .list-table-format {
+        width: 200%;
+    }
+
+    .products-list .list-table .editor-background .editor-container {
+        width: 90%;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 500px) {
+    .products-list .list-table-format {
+        font-size: 13px;
+        padding: 6px 8px;
+    }
+
+    .products-list .list-table-format:nth-child(2)  {
+        font-size: 12px;
+    }
+
+    .products-list .list-table .list-table-format img {
+        width: 47px;
+        max-height: 47px;
+    }
+
+    .products-list .list-table .list-table-format li:last-child {
+        gap: 2px;
+    }
+
+    .products-list .list-table .list-table-format li:last-child button {
+        width: 56px;
+        padding: 5px;
+        font-size: 10px;
+    }
+
+    .products-list .list-table .list-table-format li:last-child .removal-pop-up {
+        width: 128px;
+        height: 64px;
+        bottom: -6px;
+        right: -6px;
+    }
+
+    .products-list .list-table .list-table-format li:last-child .removal-pop-up button {
+        margin: 2px;
+    }
+
+    .products-list .list-table .editor-background .editor-container p {
+        font-size: 11px;
+        margin-bottom: 2px;
+    }
+
+    .products-list .list-table .editor-background .editor-container .editor h1 {
+        font-size: 25px;
+    }
+
+    .products-list .list-table .editor-background .editor-container .editor img {
+        width: 23px;
+        height: 23px;
+    }
+
+    .products-list .list-table .editor-background .editor-container .img-container {
+        gap: 5%;
+        margin-bottom: 15px;
+    }
+
+    .products-list .list-table .editor-background .editor-container .img-container img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .products-list .list-table .editor-background .editor-container .img-container .arrow_icon {
+        width: 23px;
+        height: 24px;
+    }
+
+    .products-list .list-table .editor-background .editor-container .img-container p {
+        padding-bottom: 6px;
+    }
+
+    .products-list .list-table .editor-background .editor-container input,
+    .products-list .list-table .editor-background .editor-container select {
+        height: 25px;
+        font-size: 11px;
+        padding-left: 6px;
+    }
+
+    .products-list .list-table .editor-background .editor-container .editor-name,
+    .products-list .list-table .editor-background .editor-container .editor-category-price,
+    .products-list .list-table .editor-background .editor-container .editor-validity-quantity {
+        width: 100%;
+    }
+
+    .products-list .list-table .editor-background .editor-container .editor-category-price .editor-category select,
+    .products-list .list-table .editor-background .editor-container .editor-validity-quantity .editor-validity input {
+        text-align: center;
+        width: 140px;
+    }
+
+    .products-list .list-table .editor-background .editor-container .editor-category-price .editor-price input,
+    .products-list .list-table .editor-background .editor-container .editor-validity-quantity .editor-quantity input {
+        width: 100px;
+        text-align: center;
+    }
+
+    .products-list .list-table .editor-background .editor-container .editor-btn {
+        width: 100px;
+        font-size: 14px;
+        border-radius: 15px;
+    }
+}

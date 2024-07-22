@@ -68,7 +68,7 @@ export const AddProduct = ( { url, marca }: { url: string, marca: string } ) => 
   }
 
   return (
-    <form onSubmit={ onSubmitHandler } >
+    <form className="form-container" onSubmit={ onSubmitHandler } >
       <div className="add-img-upload">
         <p>Escolha uma imagem :</p>
 
@@ -91,7 +91,7 @@ export const AddProduct = ( { url, marca }: { url: string, marca: string } ) => 
             <div className="add-category">
               <p>Categoria :</p>
 
-              <select onChange={ onChangeHandler } name="category" required>
+              <select onChange={ onChangeHandler } value={ data.category } name="category" required>
                 <option value="">Escolha a categoria</option>
                 <option value="Kits">Kits</option>
                 <option value="Perfumes">Perfumes</option>

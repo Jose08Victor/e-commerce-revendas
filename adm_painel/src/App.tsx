@@ -4,6 +4,8 @@ import "./styles.css"
 import { AddProduct } from "./pages/addProduct"
 import { ProductList } from "./pages/productList"
 import { SideBar } from "./components/sideBar"
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App () {
 
@@ -11,7 +13,8 @@ function App () {
 
   return (
     <BrowserRouter>
-
+      <ToastContainer />
+      
       <Header />
 
       <main>

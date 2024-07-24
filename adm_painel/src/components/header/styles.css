@@ -52,12 +52,11 @@
     color: #FF6916;
 }
 
-.header .active {
+.header nav ul li a.active {
     border-bottom: 2px solid black;
 }
 
 /* RESPONSIVE */
-
 .header .menu {
     display: none;
     width: 60px;

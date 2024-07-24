@@ -1,112 +1,20 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import "./styles.css"
-import axios from "axios";
-import { toast } from "react-toastify";
 import x_icon from "../../assets/x_icon.png"
 import upload_area from "../../assets/cloud-upload.svg"
 import arrow_icon from "../../assets/arrow_icon.png"
+import { AdminContext } from "../../context/adminContext";
 
-interface ProductData {
-    name: string;
-    image: File | null;
-    price: string;
-    category: string;
-    quantity: string;
-    validity: string;
-}
+export const ProductList = ( { produtos }: { produtos: string } ) => {
+    const adminContext = useContext( AdminContext );
 
-interface ProductsData {
-    _id: string;
-    name: string;
-    image: File;
-    price: number;
-    category: string;
-    quantity: number;
-    validity: string;
-}
+    if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
-interface ProductPopUp {
-    id: string;
-    action: string;
-}
-
-export const ProductList = ( { url, marca, produtos }: { url: string, marca: string, produtos: string } ) => {
-    const [ list, setList ] = useState<ProductsData[] | never[]>( [] );
-
-    const [ productPopUp, setProductPopUp ] = useState<ProductPopUp | null>( null );
-
-    const [ data, setData ] = useState<ProductData>( {
-        name: "",
-        image: null,
-        price: "",
-        category: "",
-        quantity: "",
-        validity: ""
-    } );
-
-    const fetchList = async () => {
-        const response = await axios.get( `${ url }/api/${ marca }/list` );
-        if ( !response.data.success ) toast.error( "Error" );
-
-        setList( response.data.data );
-    }
-
-    const removeProduct = async ( productId: string ) => {
-        const response = await axios.delete( `${ url }/api/${ marca }/delete/${ productId }` );
-        await fetchList();
-
-        if ( !response.data.success ) toast.error( response.data.message );
-
-        toast.success( response.data.message );
-    }
+    const { url, brand, data, setData, list, productPopUp, setProductPopUp, fetchList, removeProduct, onChangeHandler, onChangeInput, updateProduct } = adminContext;
 
     useEffect( () => {
         fetchList();
     }, [] )
-
-    const onChangeHandler = ( event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> ) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setData( data => ( { ...data, [ name ]: value } ) )
-    }
-
-    const onChangeInput = ( event: React.ChangeEvent<HTMLInputElement> ) => {
-        const inputValue = event.target.value.replace( /\D/g, '' ); // Remove qualquer caractere que não seja dígito
-        let formattedValue = inputValue;
-
-        if ( inputValue.length > 2 ) formattedValue = `${ inputValue.slice( 0, 2 ) }/${ inputValue.slice( 2 ) }`;
-        if ( inputValue.length > 4 ) formattedValue = `${ formattedValue.slice( 0, 5 ) }/${ formattedValue.slice( 5 ) }`;
-
-        setData( data => ( { ...data, [ event.target.name ]: formattedValue } ) )
-    };
-
-    const onSubmitHandler = async ( event: { preventDefault: () => void; } ) => {
-        event.preventDefault();
-
-        const formData = new FormData();
-        if ( data.name ) formData.append( "name", data.name )
-        if ( data.price ) formData.append( "price", data.price )
-        if ( data.category ) formData.append( "category", data.category )
-        if ( data.quantity ) formData.append( "quantity", data.quantity )
-        if ( data.validity ) formData.append( "validity", data.validity )
-        if ( data.image ) formData.append( "image", data.image );
-
-        const response = await axios.put( `${ url }/api/${ marca }/update/${ productPopUp?.id }`, formData )
-
-        if ( !response.data.success ) toast.error( response.data.message );
-
-        toast.success( response.data.message );
-        fetchList();
-        setProductPopUp( null );
-        setData( {
-            name: "",
-            image: null,
-            price: "",
-            category: "",
-            quantity: "",
-            validity: ""
-        } );
-    }
 
     return (
         <section className="products-list">
@@ -140,7 +48,7 @@ export const ProductList = ( { url, marca, produtos }: { url: string, marca: str
                     return (
                         <div className="list-table" key={ index }>
                             <ul className="list-table-format">
-                                <li><img src={ `${ url }/images/${ marca }/${ product.image }` } alt="Imagem do produto" /></li>
+                                <li><img src={ `${ url }/images/${ brand }/${ product.image }` } alt="Imagem do produto" /></li>
 
                                 <li>{ product.name }</li>
 
@@ -172,7 +80,7 @@ export const ProductList = ( { url, marca, produtos }: { url: string, marca: str
 
                             { productPopUp?.id === product._id && productPopUp.action === "edit" && (
                                 <div key={ index } className="editor-background">
-                                    <form className="editor-container" onSubmit={ onSubmitHandler } >
+                                    <form className="editor-container" onSubmit={ updateProduct } >
                                         <div className="editor">
                                             <h1>Editar produto</h1>
 
@@ -193,7 +101,7 @@ export const ProductList = ( { url, marca, produtos }: { url: string, marca: str
                                             <div className="current-img">
                                                 <p>Imagem atual :</p>
 
-                                                <img src={ `${ url }/images/${ marca }/${ product.image }` } alt="Imagem do produto" />
+                                                <img src={ `${ url }/images/${ brand }/${ product.image }` } alt="Imagem do produto" />
                                             </div>
 
                                             <img className="arrow_icon" src={ arrow_icon } alt="Arrow Icon" />

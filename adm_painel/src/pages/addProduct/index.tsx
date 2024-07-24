@@ -1,74 +1,17 @@
-import { useState } from "react";
 import "./styles.css"
-import axios from "axios";
-import { toast } from "react-toastify";
 import upload_area from "../../assets/cloud-upload.svg"
+import { useContext } from "react";
+import { AdminContext } from "../../context/adminContext";
 
-interface ProductData {
-  name: string;
-  image: File | null;
-  price: string;
-  category: string;
-  quantity: string;
-  validity: string;
-}
+export const AddProduct = () => {
+  const adminContext = useContext( AdminContext );
 
-export const AddProduct = ( { url, marca }: { url: string, marca: string } ) => {
-  const [ data, setData ] = useState<ProductData>( {
-    name: "",
-    image: null,
-    price: "",
-    category: "",
-    quantity: "",
-    validity: ""
-  } );
+  if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
-  const onChangeHandler = ( event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> ) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setData( data => ( { ...data, [ name ]: value } ) )
-  }
-
-  const onChangeInput = ( event: React.ChangeEvent<HTMLInputElement> ) => {
-    const inputValue = event.target.value.replace( /\D/g, '' ); // Remove qualquer caractere que não seja dígito
-    let formattedValue = inputValue;
-
-    if ( inputValue.length > 2 ) formattedValue = `${ inputValue.slice( 0, 2 ) }/${ inputValue.slice( 2 ) }`;
-    if ( inputValue.length > 4 ) formattedValue = `${ formattedValue.slice( 0, 5 ) }/${ formattedValue.slice( 5 ) }`;
-
-    setData( data => ( { ...data, [ event.target.name ]: formattedValue } ) )
-  };
-
-  const onSubmitHandler = async ( event: { preventDefault: () => void; } ) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append( "name", data.name )
-    formData.append( "price", data.price )
-    formData.append( "category", data.category )
-    formData.append( "quantity", data.quantity )
-    formData.append( "validity", data.validity )
-    if ( data.image ) formData.append( "image", data.image );
-
-    const response = await axios.post( `${ url }/api/${ marca }/add`, formData )
-
-    if ( response.data.success ) {
-      setData( {
-        name: "",
-        image: null,
-        price: "",
-        category: "",
-        quantity: "",
-        validity: ""
-      } );
-
-      toast.success( response.data.message )
-    } else {
-      toast.error( response.data.message )
-    }
-  }
+  const { data, setData, onChangeHandler, onChangeInput, addProduct } = adminContext;
 
   return (
-    <form className="form-container" onSubmit={ onSubmitHandler } >
+    <form className="form-container" onSubmit={ addProduct } >
       <div className="add-img-upload">
         <p>Escolha uma imagem :</p>
 

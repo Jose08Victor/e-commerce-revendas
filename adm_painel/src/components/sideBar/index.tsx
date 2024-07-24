@@ -1,22 +1,24 @@
-import { NavLink, useLocation } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import "./styles.css"
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { AdminContext } from "../../context/adminContext";
 
 export const SideBar = () => {
-    const { state } = useLocation();
-    const [ location, setLocation ] = useState( "/avon" );
+    const adminContext = useContext( AdminContext );
 
-    useEffect( () => {
-        if ( state ) setLocation( state )
-    }, [ state ] )
+    if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
+
+    const { brand } = adminContext;
 
     return (
-        <aside>
-            <NavLink to={ `${ location }/adicionar-produto` }><button className="btn" >Adicionar Produto</button></NavLink>
+        <>
+            { brand !== "/" && <aside>
+                <NavLink to={ `${ brand }/adicionar-produto` }><button className="btn" >Adicionar Produto</button></NavLink>
 
-            <NavLink to={ `${ location }/lista-dos-produtos` }><button className="btn" >Lista dos Produtos</button></NavLink>
+                <NavLink to={ `${ brand }/lista-dos-produtos` }><button className="btn" >Lista dos Produtos</button></NavLink>
 
-            <NavLink to={ `${ location }/produtos-indisponiveis` }><button className="btn" >Produtos Indisponíveis</button></NavLink>
-        </aside>
+                <NavLink to={ `${ brand }/produtos-indisponiveis` }><button className="btn" >Produtos Indisponíveis</button></NavLink>
+            </aside> }
+        </>
     )
 }

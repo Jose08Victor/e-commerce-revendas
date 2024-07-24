@@ -6,37 +6,40 @@ import { ProductList } from "./pages/productList"
 import { SideBar } from "./components/sideBar"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AdminContextProvider from "./context/adminContext"
+import { Home } from "./pages/home"
 
 function App () {
-
-  const url = "http://localhost:4000";
-
   return (
-    <BrowserRouter>
-      <ToastContainer />
-      
-      <Header />
+    <AdminContextProvider>
+      <BrowserRouter>
+        <ToastContainer />
 
-      <main>
-        <SideBar />
+        <Header />
 
-        <Routes>
-          <Route path="/avon/adicionar-produto" element={ <AddProduct url={ url } marca={ "avon" } /> } />
+        <main>
+          <SideBar />
 
-          <Route path="/avon/lista-dos-produtos" element={ <ProductList url={ url } marca={ "avon" } produtos={ "disponivel" } /> } />
+          <Routes>
+            <Route path="/" element={ <Home /> } />
 
-          <Route path="/avon/produtos-indisponiveis" element={ <ProductList url={ url } marca={ "avon" } produtos={ "indisponivel" } /> } />
+            <Route path="/avon/adicionar-produto" element={ <AddProduct /> } />
+
+            <Route path="/avon/lista-dos-produtos" element={ <ProductList produtos={ "disponivel" } /> } />
+
+            <Route path="/avon/produtos-indisponiveis" element={ <ProductList produtos={ "indisponivel" } /> } />
 
 
-          <Route path="/natura/adicionar-produto" element={ <AddProduct url={ url } marca={ "natura" } /> } />
+            <Route path="/natura/adicionar-produto" element={ <AddProduct /> } />
 
-          <Route path="/natura/lista-dos-produtos" element={ <ProductList url={ url } marca={ "natura" } produtos={ "disponivel" } /> } />
+            <Route path="/natura/lista-dos-produtos" element={ <ProductList produtos={ "disponivel" } /> } />
 
-          <Route path="/natura/produtos-indisponiveis" element={ <ProductList url={ url } marca={ "natura" } produtos={ "indisponivel" } /> } />
-        </Routes>
-      </main>
+            <Route path="/natura/produtos-indisponiveis" element={ <ProductList produtos={ "indisponivel" } /> } />
+          </Routes>
+        </main>
 
-    </BrowserRouter>
+      </BrowserRouter>
+    </AdminContextProvider>
   )
 }
 

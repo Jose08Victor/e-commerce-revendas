@@ -1,30 +1,60 @@
-import { Link, NavLink } from "react-router-dom";
-//import avon_icon from "../../assets/avon_icon.png";
-//import natura_icon from "../../assets/natura_icon.png";
+import { Link } from "react-router-dom";
 import "./styles.css"
+import { MutableRefObject, useContext, useRef } from "react";
+import { AdminContext } from "../../context/adminContext";
 
 export const Header = () => {
+    const adminContext = useContext( AdminContext );
+    if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
+    const { setBrand } = adminContext;
 
-    const toggleClass = () => document.querySelector( "nav" )?.classList.toggle( "toggle" )
+    const navRef = useRef<HTMLElement | null>( null );
+    const avonRef = useRef<HTMLAnchorElement | null>( null );
+    const naturaRef = useRef<HTMLAnchorElement | null>( null );
+
+    const navClass = () => navRef.current?.classList.toggle( "toggle" );
+
+    const toggleClass = ( Ref1: MutableRefObject<HTMLAnchorElement | null>, Ref2: MutableRefObject<HTMLAnchorElement | null> ) => {
+        Ref1.current?.classList.add( "active" );
+        Ref2.current?.classList.remove( "active" );
+        navRef.current?.classList.remove( "toggle" );
+    }
+
+    const removeClass = () => {
+        naturaRef.current?.classList.remove( "active" );
+        avonRef.current?.classList.remove( "active" );
+        navRef.current?.classList.remove( "toggle" );
+    }
 
     return (
         <header className="header">
-            <Link to="/"><img className="logo" src="https://img.freepik.com/psd-gratuitas/circulo-vermelho_23-2150588573.jpg?semt=sph" alt="Test" /></Link>
+            <Link to="/" onClick={ () => {
+                removeClass();
+                setBrand( "/" );
+            } }>
+                <img className="logo" src="https://img.freepik.com/psd-gratuitas/circulo-vermelho_23-2150588573.jpg?semt=sph" alt="Test" />
+            </Link>
 
-            <nav>
+            <nav ref={ navRef }>
                 <input type="checkbox" id="menu-hamburguer" />
 
                 <label htmlFor="menu-hamburguer">
-                    <div className="menu" onClick={ toggleClass } >
+                    <div className="menu" onClick={ navClass } >
                         <span className="hamburguer"></span>
                     </div>
                 </label>
 
                 <ul>
                     <li className="links">
-                        <NavLink to="/avon" state={ "/avon" } onClick={ toggleClass }><p>Produtos Avon</p></NavLink>
+                        <Link ref={ avonRef } to="/avon/adicionar-produto" onClick={ () => {
+                            setBrand( "avon" );
+                            toggleClass( avonRef, naturaRef );
+                        } }><p>Produtos Avon</p></Link>
 
-                        <NavLink to="/natura" state={ "/natura" } onClick={ toggleClass } ><p>Produtos Natura</p></NavLink>
+                        <Link ref={ naturaRef } to="/natura/adicionar-produto" onClick={ () => {
+                            setBrand( "natura" );
+                            toggleClass( naturaRef, avonRef );
+                        } } ><p>Produtos Natura</p></Link>
                     </li>
 
                     <li className="login-btn">
@@ -32,7 +62,6 @@ export const Header = () => {
                     </li>
                 </ul>
             </nav>
-
         </header>
     )
 }

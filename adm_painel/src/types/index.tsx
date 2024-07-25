@@ -2,6 +2,8 @@ import { ReactNode } from "react";
 
 export interface AdminContextProps {
     url: string;
+    themeColor: string;
+    setThemeColor: React.Dispatch<React.SetStateAction<string>>;
     brand: string;
     setBrand: React.Dispatch<React.SetStateAction<string>>;
     data: ProductData;

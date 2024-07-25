@@ -5,8 +5,15 @@ import { toast } from "react-toastify";
 
 export const AdminContext = createContext<AdminContextProps | null>( null );
 
+export const themes = {
+    avonColor: "#E4004B",
+    naturaColor: "#FF6916"
+}
+
 const AdminContextProvider = ( props: AdminContextProviderProps ) => {
     const url = "http://localhost:4000";
+
+    const [themeColor, setThemeColor] = useState("#4eb2ff")
 
     const [ brand, setBrand ] = useState<string>( "/" );
 
@@ -108,7 +115,7 @@ const AdminContextProvider = ( props: AdminContextProviderProps ) => {
         setData( data => ( { ...data, [ event.target.name ]: formattedValue } ) )
     };
 
-    const contextValue = { url, brand, setBrand, data, setData, list, productPopUp, setProductPopUp, fetchList, addProduct, updateProduct, removeProduct, onChangeHandler, onChangeInput }
+    const contextValue = { url, themeColor, setThemeColor,brand, setBrand, data, setData, list, productPopUp, setProductPopUp, fetchList, addProduct, updateProduct, removeProduct, onChangeHandler, onChangeInput }
 
     return (
         <AdminContext.Provider value={ contextValue }>

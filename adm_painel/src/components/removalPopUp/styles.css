@@ -1,0 +1,25 @@
+.removal-pop-up {
+    position: absolute;
+    width: 200px;
+    height: 94px;
+    right: -10px;
+    bottom: -10px;
+    background-color: aliceblue;
+}
+
+.removal-pop-up button {
+    margin: 6px;
+}
+
+@media (max-width: 500px) {
+    .removal-pop-up {
+        width: 128px;
+        height: 64px;
+        bottom: -6px;
+        right: -6px;
+    }
+
+    .removal-pop-up button {
+        margin: 2px;
+    }
+}

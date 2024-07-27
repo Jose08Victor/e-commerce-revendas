@@ -7,13 +7,14 @@ export const AdminContext = createContext<AdminContextProps | null>( null );
 
 export const themes = {
     avonColor: "#E4004B",
-    naturaColor: "#FF6916"
+    naturaColor: "#FF6916",
+    defaultColor: "#4eb2ff"
 }
 
 const AdminContextProvider = ( props: AdminContextProviderProps ) => {
     const url = "http://localhost:4000";
 
-    const [themeColor, setThemeColor] = useState("#4eb2ff")
+    const [themeColor, setThemeColor] = useState<{}>(themes.defaultColor)
 
     const [ brand, setBrand ] = useState<string>( "/" );
 

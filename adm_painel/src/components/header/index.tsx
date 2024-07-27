@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import "./styles.css"
 import { MutableRefObject, useContext, useRef } from "react";
-import { AdminContext } from "../../context/adminContext";
+import { AdminContext, themes } from "../../context/adminContext";
+import { HeaderContainer, Logo, Nav, Ul, Links, P, LoginButton, Hamburguer, Menu } from "./styles";
 
 export const Header = () => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
-    const { setBrand } = adminContext;
+    const { themeColor, setThemeColor, setBrand } = adminContext;
 
     const navRef = useRef<HTMLElement | null>( null );
     const avonRef = useRef<HTMLAnchorElement | null>( null );
@@ -27,41 +27,44 @@ export const Header = () => {
     }
 
     return (
-        <header className="header">
+        <HeaderContainer theme={themeColor}>
             <Link to="/" onClick={ () => {
                 removeClass();
                 setBrand( "/" );
+                setThemeColor( themes.defaultColor );
             } }>
-                <img className="logo" src="https://img.freepik.com/psd-gratuitas/circulo-vermelho_23-2150588573.jpg?semt=sph" alt="Test" />
+                <Logo src="https://img.freepik.com/psd-gratuitas/circulo-vermelho_23-2150588573.jpg?semt=sph" alt="Test" />
             </Link>
 
-            <nav ref={ navRef }>
+            <Nav ref={ navRef }>
                 <input type="checkbox" id="menu-hamburguer" />
 
                 <label htmlFor="menu-hamburguer">
-                    <div className="menu" onClick={ navClass } >
-                        <span className="hamburguer"></span>
-                    </div>
+                    <Menu onClick={ navClass } >
+                        <Hamburguer theme={themeColor}></Hamburguer>
+                    </Menu>
                 </label>
 
-                <ul>
-                    <li className="links">
+                <Ul>
+                    <Links theme={themeColor}>
                         <Link ref={ avonRef } to="/avon/adicionar-produto" onClick={ () => {
                             setBrand( "avon" );
                             toggleClass( avonRef, naturaRef );
-                        } }><p>Produtos Avon</p></Link>
+                            setThemeColor( themes.avonColor );
+                        } }><P>Produtos Avon</P></Link>
 
                         <Link ref={ naturaRef } to="/natura/adicionar-produto" onClick={ () => {
                             setBrand( "natura" );
                             toggleClass( naturaRef, avonRef );
-                        } } ><p>Produtos Natura</p></Link>
-                    </li>
+                            setThemeColor( themes.naturaColor );
+                        } } ><P>Produtos Natura</P></Link>
+                    </Links>
 
-                    <li className="login-btn">
-                        <button>Log out</button>
+                    <li>
+                        <LoginButton theme={themeColor}>Log out</LoginButton>
                     </li>
-                </ul>
-            </nav>
-        </header>
+                </Ul>
+            </Nav>
+        </HeaderContainer>
     )
 }

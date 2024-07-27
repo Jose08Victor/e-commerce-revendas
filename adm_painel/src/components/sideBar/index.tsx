@@ -1,24 +1,24 @@
-import { NavLink } from "react-router-dom"
-import "./styles.css"
+import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { AdminContext } from "../../context/adminContext";
+import { Aside, Button } from "./styles";
 
 export const SideBar = () => {
     const adminContext = useContext( AdminContext );
 
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
-    const { brand } = adminContext;
+    const { brand, themeColor } = adminContext;
 
     return (
         <>
-            { brand !== "/" && <aside>
-                <NavLink to={ `${ brand }/adicionar-produto` }><button className="btn" >Adicionar Produto</button></NavLink>
+            { brand !== "/" && <Aside theme={themeColor}>
+                <NavLink to={ `${ brand }/adicionar-produto` }><Button theme={themeColor} >Adicionar Produto</Button></NavLink>
 
-                <NavLink to={ `${ brand }/lista-dos-produtos` }><button className="btn" >Lista dos Produtos</button></NavLink>
+                <NavLink to={ `${ brand }/lista-dos-produtos` }><Button theme={themeColor} >Lista dos Produtos</Button></NavLink>
 
-                <NavLink to={ `${ brand }/produtos-indisponiveis` }><button className="btn" >Produtos Indisponíveis</button></NavLink>
-            </aside> }
+                <NavLink to={ `${ brand }/produtos-indisponiveis` }><Button theme={themeColor} >Produtos Indisponíveis</Button></NavLink>
+            </Aside> }
         </>
     )
 }

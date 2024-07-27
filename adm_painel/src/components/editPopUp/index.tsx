@@ -3,19 +3,19 @@ import { AdminContext } from "../../context/adminContext";
 import x_icon from "../../assets/x_icon.png";
 import upload_area from "../../assets/cloud-upload.svg";
 import arrow_icon from "../../assets/arrow_icon.png";
-import "./styles.css";
+import { ArrowIcon, CurrentImg, Edit, EditBackground, EditButton, EditCategory_Price, EditContainer, EditName, EditValidity_Quantity, ImgContainer, ImgUpload } from "./styles";
 
 export const EditPopUp = ( { productImage }: { productImage: File } ) => {
     const adminContext = useContext( AdminContext );
 
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
-    const { url, brand, data, setData, setProductPopUp, onChangeHandler, onChangeInput, updateProduct } = adminContext;
+    const { themeColor, url, brand, data, setData, setProductPopUp, onChangeHandler, onChangeInput, updateProduct } = adminContext;
 
     return (
-        <div className="editor-background">
-            <form className="editor-container" onSubmit={ updateProduct } >
-                <div className="editor">
+        <EditBackground>
+            <EditContainer onSubmit={ updateProduct } >
+                <Edit>
                     <h1>Editar produto</h1>
 
                     <img src={ x_icon } onClick={ () => {
@@ -29,36 +29,36 @@ export const EditPopUp = ( { productImage }: { productImage: File } ) => {
                             validity: ""
                         } )
                     } } />
-                </div>
+                </Edit>
 
-                <div className="img-container">
-                    <div className="current-img">
+                <ImgContainer>
+                    <div>
                         <p>Imagem atual :</p>
 
-                        <img src={ `${ url }/images/${ brand }/${ productImage }` } alt="Imagem do produto" />
+                        <CurrentImg src={ `${ url }/images/${ brand }/${ productImage }` } alt="Imagem do produto" />
                     </div>
 
-                    <img className="arrow_icon" src={ arrow_icon } alt="Arrow Icon" />
+                    <ArrowIcon src={ arrow_icon } alt="Arrow Icon" />
 
-                    <div className="editor-img-upload">
+                    <div>
                         <p>Trocar imagem ?</p>
 
                         <label htmlFor="image">
-                            <img src={ data.image ? URL.createObjectURL( data.image ) : upload_area } alt="Upload Area Image" />
+                            <ImgUpload src={ data.image ? URL.createObjectURL( data.image ) : upload_area } alt="Upload Area Image" />
                         </label>
 
                         <input onChange={ ( e ) => setData( data => ( { ...data, [ e.target.name ]: e.target.files ? e.target.files[ 0 ] : null } ) ) } type="file" id="image" name="image" hidden />
                     </div>
-                </div>
+                </ImgContainer>
 
-                <div className="editor-name">
+                <EditName>
                     <p>Editar Nome ?</p>
 
                     <input value={ data.name } onChange={ onChangeHandler } type="text" name="name" placeholder="Digite aqui..." />
-                </div>
+                </EditName>
 
-                <div className="editor-category-price">
-                    <div className="editor-category">
+                <EditCategory_Price>
+                    <div>
                         <p>Editar Categoria ?</p>
 
                         <select name="category" onChange={ onChangeHandler } >
@@ -69,29 +69,29 @@ export const EditPopUp = ( { productImage }: { productImage: File } ) => {
                         </select>
                     </div>
 
-                    <div className="editor-price">
+                    <div>
                         <p>Editar Preço ?</p>
 
                         <input value={ data.price } onChange={ onChangeHandler } type="Number" name="price" placeholder="R$ -" min={ 0 } max={ 999 } />
                     </div>
-                </div>
+                </EditCategory_Price>
 
-                <div className="editor-validity-quantity">
-                    <div className="editor-validity">
+                <EditValidity_Quantity>
+                    <div>
                         <p>Editar Validade ?</p>
 
                         <input type="text" value={ data.validity } onChange={ onChangeInput } name="validity" placeholder="DD/MM/YYYY" maxLength={ 10 } />
                     </div>
 
-                    <div className="editor-quantity">
+                    <div>
                         <p>Editar Quantidade ?</p>
 
                         <input type="number" value={ data.quantity } onChange={ onChangeHandler } name="quantity" placeholder="-" min={ 0 } max={ 99 } />
                     </div>
-                </div>
+                </EditValidity_Quantity>
 
-                <button type="submit" className="editor-btn" >Confirmar</button>
-            </form>
-        </div>
+                <EditButton theme={themeColor} type="submit">Confirmar</EditButton>
+            </EditContainer>
+        </EditBackground>
     )
 }

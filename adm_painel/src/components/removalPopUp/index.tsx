@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import "./styles.css"
 import { AdminContext } from "../../context/adminContext";
+import { RemovalPopUpContainer } from "./styles";
 
 export const RemovalPopUp = ({ productId }: { productId: string }) => {
     const adminContext = useContext( AdminContext );
@@ -10,7 +10,7 @@ export const RemovalPopUp = ({ productId }: { productId: string }) => {
     const { setProductPopUp, removeProduct } = adminContext;
 
     return (
-        <div className="removal-pop-up">
+        <RemovalPopUpContainer>
             <h4>Desejar remover este produto?</h4>
 
             <button onClick={ () => {
@@ -19,6 +19,6 @@ export const RemovalPopUp = ({ productId }: { productId: string }) => {
             } } >Sim</button>
 
             <button onClick={ () => setProductPopUp( null ) }>Não</button>
-        </div>
+        </RemovalPopUpContainer>
     )
 }

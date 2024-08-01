@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import { AdminContext } from "../../context/adminContext";
 import x_icon from "../../assets/x_icon.png";
-import upload_area from "../../assets/cloud-upload.svg";
+import pink_cloud_upload from "../../assets/pink_cloud_upload.svg";
+import orange_cloud_upload from "../../assets/orange_cloud_upload.svg";
 import arrow_icon from "../../assets/arrow_icon.png";
 import { ArrowIcon, CurrentImg, Edit, EditBackground, EditButton, EditCategory_Price, EditContainer, EditName, EditValidity_Quantity, ImgContainer, ImgUpload } from "./styles";
 
@@ -14,7 +15,7 @@ export const EditPopUp = ( { productImage }: { productImage: File } ) => {
 
     return (
         <EditBackground>
-            <EditContainer onSubmit={ updateProduct } >
+            <EditContainer theme={themeColor} onSubmit={ updateProduct } >
                 <Edit>
                     <h1>Editar produto</h1>
 
@@ -44,7 +45,7 @@ export const EditPopUp = ( { productImage }: { productImage: File } ) => {
                         <p>Trocar imagem ?</p>
 
                         <label htmlFor="image">
-                            <ImgUpload src={ data.image ? URL.createObjectURL( data.image ) : upload_area } alt="Upload Area Image" />
+                            <ImgUpload src={ data.image ? URL.createObjectURL( data.image ) : brand === "avon" ? pink_cloud_upload : orange_cloud_upload } alt="Upload Area Image" />
                         </label>
 
                         <input onChange={ ( e ) => setData( data => ( { ...data, [ e.target.name ]: e.target.files ? e.target.files[ 0 ] : null } ) ) } type="file" id="image" name="image" hidden />

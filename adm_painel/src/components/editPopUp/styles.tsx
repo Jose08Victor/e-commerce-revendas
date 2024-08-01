@@ -37,6 +37,13 @@ export const EditContainer = styled.form`
         font-family: "Nunito", sans-serif;
         padding-left: 8px;
         margin-bottom: 25px;
+        border: 1px solid ${props => props.theme};
+        border-radius: 10px;
+        outline: none;
+
+        &:focus {
+            border: 2px solid ${props => props.theme};
+        }
     }
     
     @media (max-width: 900px) {
@@ -159,8 +166,8 @@ export const EditCategory_Price = styled(EditName)`
     }
 
     input {
-        width: 120px;
         text-align: center;
+        width: 120px;
     }
 
     @media (max-width: 500px) {
@@ -176,7 +183,6 @@ export const EditCategory_Price = styled(EditName)`
 
 export const EditValidity_Quantity = styled(EditCategory_Price)`
     :first-child input {
-        text-align: center;
         width: 200px;
     }
 

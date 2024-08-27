@@ -4,7 +4,7 @@ import fs from "fs";
 export const magazineDataList = async (_, res) => {
     try {
         const magazineData = await magazineDataModel.find({});
-        res.json({ success: true, magazineData });
+        res.json({ success: true, data: magazineData });
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: "Error" });
@@ -26,7 +26,7 @@ export const updateMagazineData = async (req, res) => {
             data.naturaMagazineImage = `${req.file.filename}`;
         };
 
-        if (req.file && req.body.magazine === "casa&Estilo") {
+        if (req.file && req.body.magazine === "casa&estilo") {
             fs.unlink(`uploads/magazineImage/${magazineData.casa_estiloMagazineImage}`, () => { });
             data.casa_estiloMagazineImage = `${req.file.filename}`;
         };

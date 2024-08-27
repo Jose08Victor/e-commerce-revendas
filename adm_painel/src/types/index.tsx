@@ -6,22 +6,36 @@ export interface AdminContextProps {
     setThemeColor: React.Dispatch<React.SetStateAction<{}>>;
     brand: string;
     setBrand: React.Dispatch<React.SetStateAction<string>>;
-    data: ProductData;
-    setData: React.Dispatch<React.SetStateAction<ProductData>>;
-    list: ProductsData[] | never[];
-    productPopUp: ProductPopUp | null;
-    setProductPopUp: React.Dispatch<React.SetStateAction<ProductPopUp | null>>;
-    fetchList: () => Promise<void>;
+    type: string;
+    setType: React.Dispatch<React.SetStateAction<string>>;
+    productName: string[] | [];
+    setProductName: React.Dispatch<React.SetStateAction<string[] | []>>;
+    productData: ProductData;
+    setProductData: React.Dispatch<React.SetStateAction<ProductData>>;
+    kitData: KitData;
+    setKitData: React.Dispatch<React.SetStateAction<KitData>>;
+    magazineData: MagazineData;
+    setMagazineData: React.Dispatch<React.SetStateAction<MagazineData>>;
+    list: List;
+    popUp: PopUp | null;
+    setPopUp: React.Dispatch<React.SetStateAction<PopUp | null>>;
+    getProductList: () => Promise<void>;
+    getKitList: () => Promise<void>;
+    getMagazineList: () => Promise<void>;
     addProduct: ( event: React.FormEvent<HTMLFormElement> ) => Promise<void>;
+    addKit: ( event: React.FormEvent<HTMLFormElement> ) => Promise<void>;
     updateProduct: ( event: React.FormEvent<HTMLFormElement> ) => Promise<void>;
+    updateKit: ( event: React.FormEvent<HTMLFormElement> ) => Promise<void>;
+    updateMagazineData: ( event: React.FormEvent<HTMLFormElement> ) => Promise<void>;
     removeProduct: ( productId: string ) => Promise<void>;
+    removeKit: ( productId: string ) => Promise<void>;
     onChangeHandler: ( event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> ) => void;
-    onChangeInput: ( event: React.ChangeEvent<HTMLInputElement> ) => void;
-}
+    onChangeValidityInput: ( event: React.ChangeEvent<HTMLInputElement> ) => void;
+};
 
 export interface AdminContextProviderProps {
     children: ReactNode;
-}
+};
 
 export interface ProductData {
     name: string;
@@ -30,19 +44,66 @@ export interface ProductData {
     category: string;
     quantity: string;
     validity: string;
-}
+};
 
-export interface ProductsData {
-    _id: string;
-    name: string;
-    image: File;
-    price: number;
-    category: string;
-    quantity: number;
-    validity: string;
-}
+export interface KitData {
+    image: File | null;
+    nameOfProducts: string[] | [];
+    price: string;
+    quantity: string;
+};
 
-export interface ProductPopUp {
-    id: string;
+export interface MagazineData {
+    currentCycle: "";
+    startOfCycle: "";
+    endOfCycle: "";
+    avonMagazineImage: File | null;
+    avonMagazineLink: "";
+    casa_estiloMagazineImage: File | null;
+    casa_estiloMagazineLink: "";
+    naturaMagazineImage: File | null;
+    naturaMagazineLink: "";
+};
+
+export interface PopUp {
     action: string;
-}
+    id?: string;
+    image?: File;
+    imageName?: string;
+    linkName?: string;
+    brand?: string;
+};
+
+export interface List {
+    products: [] |
+    [ {
+        _id: string;
+        name: string;
+        image: File;
+        price: number;
+        category: string;
+        quantity: number;
+        validity: string;
+    } ],
+    kits: [] |
+    [ {
+        _id: string;
+        image: File;
+        nameOfProducts: string[];
+        price: number;
+        quantity: number;
+    } ],
+    magazine: [] |
+    [ {
+        _id: string;
+        currentCycle: number;
+        startOfCycle: string;
+        endOfCycle: string;
+        avonMagazineImage: File;
+        avonMagazineLink: string;
+        casa_estiloMagazineImage: File;
+        casa_estiloMagazineLink: string;
+        naturaMagazineImage: File;
+        naturaMagazineLink: string;
+    } ]
+};

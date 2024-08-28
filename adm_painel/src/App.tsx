@@ -1,51 +1,45 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { Header } from "./components/header"
-import "./styles.css"
-import { AddProduct } from "./pages/addProduct"
-import { ProductList } from "./pages/productList"
-import { SideBar } from "./components/sideBar"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Header } from "./components/header";
+import { AddItem } from "./pages/addItem";
+import { ProductList } from "./pages/productList";
+import { SideBar } from "./components/sideBar";
 import { ToastContainer } from 'react-toastify';
+import { AdminContext } from "./context/adminContext";
+import { Home } from "./pages/home";
+import { KitList } from "./pages/kitList";
+import { useContext } from "react";
 import 'react-toastify/dist/ReactToastify.css';
-import AdminContextProvider from "./context/adminContext"
-import { Home } from "./pages/home"
-import { KitList } from "./pages/kitList"
 
 function App () {
+  const adminContext = useContext( AdminContext );
+
+  if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
+
+  const { brand } = adminContext;
+
   return (
-    <AdminContextProvider>
-      <BrowserRouter>
-        <ToastContainer />
+    <BrowserRouter>
+      <ToastContainer />
 
-        <Header />
+      <Header />
 
-        <main>
-          <SideBar />
+      <main>
+        <SideBar />
 
-          <Routes>
-            <Route path="/" element={ <Home /> } />
+        <Routes>
+          <Route path="/" element={ <Home /> } />
 
-            <Route path="/avon/adicionar-produto" element={ <AddProduct /> } />
+          <Route path={ `/${ brand }/adicionar-item` } element={ <AddItem /> } />
 
-            <Route path="/avon/lista-dos-produtos" element={ <ProductList produtos={ "disponivel" } /> } />
+          <Route path={ `/${ brand }/lista-dos-produtos` } element={ <ProductList products={ "available" } /> } />
 
-            <Route path="/avon/produtos-indisponiveis" element={ <ProductList produtos={ "indisponivel" } /> } />
+          <Route path={ `/${ brand }/produtos-indisponiveis` } element={ <ProductList products={ "unavailable" } /> } />
 
-            <Route path="/avon/kits-presentes" element={ <KitList /> } />
-
-
-            <Route path="/natura/adicionar-produto" element={ <AddProduct /> } />
-
-            <Route path="/natura/lista-dos-produtos" element={ <ProductList produtos={ "disponivel" } /> } />
-
-            <Route path="/natura/produtos-indisponiveis" element={ <ProductList produtos={ "indisponivel" } /> } />
-
-            <Route path="/natura/kits-presentes" element={ <KitList /> } />
-          </Routes>
-        </main>
-
-      </BrowserRouter>
-    </AdminContextProvider>
+          <Route path={ `/${ brand }/kits-presentes` } element={ <KitList /> } />
+        </Routes>
+      </main>
+    </BrowserRouter>
   )
 }
 
-export default App
+export default App;

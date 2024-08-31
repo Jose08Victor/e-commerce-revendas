@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { AdminContext } from "../../context/adminContext";
-import { Aside, Button } from "./styles";
+import { Aside } from "./styles";
 
 export const SideBar = () => {
     const adminContext = useContext( AdminContext );
@@ -12,13 +12,15 @@ export const SideBar = () => {
 
     return (
         <>
-            { brand !== "/" && <Aside theme={themeColor}>
-                <NavLink to={ `${ brand }/adicionar-produto` }><Button theme={themeColor} >Adicionar Produto</Button></NavLink>
+            { brand !== "/" && <Aside theme={ themeColor }>
+                <NavLink to={ `${ brand }/adicionar-item` }>Adicionar Produto / Kit</NavLink>
 
-                <NavLink to={ `${ brand }/lista-dos-produtos` }><Button theme={themeColor} >Lista dos Produtos</Button></NavLink>
+                <NavLink to={ `${ brand }/lista-dos-produtos` }>Lista dos Produtos</NavLink>
 
-                <NavLink to={ `${ brand }/produtos-indisponiveis` }><Button theme={themeColor} >Produtos Indisponíveis</Button></NavLink>
+                <NavLink to={ `${ brand }/kits-presentes` }>Lista dos Kits/Presentes</NavLink>
+
+                <NavLink to={ `${ brand }/produtos-indisponiveis` }>Produtos Indisponíveis</NavLink>
             </Aside> }
         </>
     )
-}
+};

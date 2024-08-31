@@ -18,16 +18,16 @@ export const Header = () => {
         Ref1.current?.classList.add( "active" );
         Ref2.current?.classList.remove( "active" );
         navRef.current?.classList.remove( "toggle" );
-    }
+    };
 
     const removeClass = () => {
         naturaRef.current?.classList.remove( "active" );
         avonRef.current?.classList.remove( "active" );
         navRef.current?.classList.remove( "toggle" );
-    }
+    };
 
     return (
-        <HeaderContainer theme={themeColor}>
+        <HeaderContainer theme={ themeColor }>
             <Link to="/" onClick={ () => {
                 removeClass();
                 setBrand( "/" );
@@ -41,19 +41,19 @@ export const Header = () => {
 
                 <label htmlFor="menu-hamburguer">
                     <Menu onClick={ navClass } >
-                        <Hamburguer theme={themeColor}></Hamburguer>
+                        <Hamburguer theme={ themeColor }></Hamburguer>
                     </Menu>
                 </label>
 
                 <Ul>
-                    <Links theme={themeColor}>
-                        <Link ref={ avonRef } to="/avon/adicionar-produto" onClick={ () => {
+                    <Links theme={ themeColor }>
+                        <Link ref={ avonRef } to="/avon/adicionar-item" onClick={ () => {
                             setBrand( "avon" );
                             toggleClass( avonRef, naturaRef );
                             setThemeColor( themes.avonColor );
                         } }><P>Produtos Avon</P></Link>
 
-                        <Link ref={ naturaRef } to="/natura/adicionar-produto" onClick={ () => {
+                        <Link ref={ naturaRef } to="/natura/adicionar-item" onClick={ () => {
                             setBrand( "natura" );
                             toggleClass( naturaRef, avonRef );
                             setThemeColor( themes.naturaColor );
@@ -61,10 +61,10 @@ export const Header = () => {
                     </Links>
 
                     <li>
-                        <LoginButton theme={themeColor}>Log out</LoginButton>
+                        <LoginButton theme={ themeColor }>Log out</LoginButton>
                     </li>
                 </Ul>
             </Nav>
         </HeaderContainer>
-    )
-}
+    );
+};

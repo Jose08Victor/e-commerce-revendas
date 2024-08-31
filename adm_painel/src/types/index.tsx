@@ -2,8 +2,8 @@ import { ReactNode } from "react";
 
 export interface AdminContextProps {
     url: string;
-    themeColor: {};
-    setThemeColor: React.Dispatch<React.SetStateAction<{}>>;
+    themeColor: string;
+    setThemeColor: React.Dispatch<React.SetStateAction<string>>;
     brand: string;
     setBrand: React.Dispatch<React.SetStateAction<string>>;
     type: string;
@@ -31,11 +31,11 @@ export interface AdminContextProps {
     removeKit: ( productId: string ) => Promise<void>;
     onChangeHandler: ( event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> ) => void;
     onChangeValidityInput: ( event: React.ChangeEvent<HTMLInputElement> ) => void;
-};
+}
 
 export interface AdminContextProviderProps {
     children: ReactNode;
-};
+}
 
 export interface ProductData {
     name: string;
@@ -44,14 +44,14 @@ export interface ProductData {
     category: string;
     quantity: string;
     validity: string;
-};
+}
 
 export interface KitData {
     image: File | null;
     nameOfProducts: string[] | [];
     price: string;
     quantity: string;
-};
+}
 
 export interface MagazineData {
     currentCycle: "";
@@ -63,7 +63,7 @@ export interface MagazineData {
     casa_estiloMagazineLink: "";
     naturaMagazineImage: File | null;
     naturaMagazineLink: "";
-};
+}
 
 export interface PopUp {
     action: string;
@@ -72,7 +72,7 @@ export interface PopUp {
     imageName?: string;
     linkName?: string;
     brand?: string;
-};
+}
 
 export interface List {
     products: [] |
@@ -106,4 +106,4 @@ export interface List {
         naturaMagazineImage: File;
         naturaMagazineLink: string;
     } ]
-};
+}

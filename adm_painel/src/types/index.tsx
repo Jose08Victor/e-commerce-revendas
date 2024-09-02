@@ -2,8 +2,9 @@ import { ReactNode } from "react";
 
 export interface AdminContextProps {
     url: string;
-    themeColor: string;
-    setThemeColor: React.Dispatch<React.SetStateAction<string>>;
+    themes: Themes;
+    themeColor: string[];
+    setThemeColor: React.Dispatch<React.SetStateAction<string[]>>;
     brand: string;
     setBrand: React.Dispatch<React.SetStateAction<string>>;
     type: string;
@@ -35,6 +36,12 @@ export interface AdminContextProps {
 
 export interface AdminContextProviderProps {
     children: ReactNode;
+}
+
+export interface Themes {
+    avonColor: string;
+    naturaColor: string;
+    defaultColor: string;
 }
 
 export interface ProductData {

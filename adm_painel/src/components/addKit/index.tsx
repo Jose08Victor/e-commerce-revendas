@@ -47,7 +47,7 @@ export const AddKit = () => {
                                         <h4>{ name }</h4>
 
                                         <p onClick={ () => {
-                                            let names: string[] | null = [];
+                                            const names: string[] | null = [];
                                             productName.filter( ( name, i ) => { if ( i !== index ) names.push( name ) } );
                                             setProductName( names );
                                         } }>x</p>

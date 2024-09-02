@@ -1,50 +1,79 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AdminContext } from "../../context/adminContext";
 import { RemovalPopUp } from "../../components/removalPopUp";
-import { EditPopUp } from "../../components/editPopUp";
-import { CategoryField, ListTable, ListTableFormat, ProductListContainer } from "./styles";
+import { EditProductPopUp } from "../../components/editProductPopUp";
+import { CategoryField, ProductListTableFormat } from "./styles";
+import { ActionButton, ListContainer, ListTable } from "../styles/pageStyles";
 
-export const ProductList = ( { produtos }: { produtos: string } ) => {
+export const ProductList = ( { products }: { products: string } ) => {
     const adminContext = useContext( AdminContext );
 
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
-    const { url, brand, list, productPopUp, setProductPopUp, fetchList, themeColor } = adminContext;
+    const { url, brand, list, popUp, setPopUp, getProductList, themeColor, setType } = adminContext;
+
+    const [ category, setCategory ] = useState( "Perfumes" );
 
     useEffect( () => {
-        fetchList();
-    }, [] )
+        getProductList();
+    }, [getProductList] );
 
     return (
-        <ProductListContainer theme={themeColor}>
-            <CategoryField theme={themeColor}>
-                <li>perfumes</li>
-                <li>maquiagem</li>
-                <li>Kits</li>
-                <li>maquiagem</li>
-                <li>maquiagem</li>
-                <li>maquiagem</li>
-                <li>maquiagem</li>
-                <li>maquiagem</li>
-                <li>maquiagem</li>
-                <li>maquiagem</li>
-                <li>maquiagem</li>
+        <ListContainer theme={ themeColor }>
+            <CategoryField theme={ themeColor }>
+                { brand === "avon" ?
+                    <>
+                        <li onClick={ () => setCategory( "Perfumes" ) }
+                            className={ category === "Perfumes" ? "selected" : "" }>Perfumes</li>
+
+                        <li onClick={ () => setCategory( "Rosto" ) }
+                            className={ category === "Rosto" ? "selected" : "" }>Rosto</li>
+
+                        <li onClick={ () => setCategory( "Lábios" ) }
+                            className={ category === "Lábios" ? "selected" : "" }>Lábios</li>
+
+                        <li onClick={ () => setCategory( "Olhos" ) }
+                            className={ category === "Olhos" ? "selected" : "" }>Olhos</li>
+
+                        <li onClick={ () => setCategory( "Unhas" ) }
+                            className={ category === "Unhas" ? "selected" : "" }>Unhas</li>
+
+                        <li onClick={ () => setCategory( "Desodorantes" ) }
+                            className={ category === "Desodorantes" ? "selected" : "" }>Desodorantes</li>
+
+                        <li onClick={ () => setCategory( "Cuidados Diários" ) }
+                            className={ category === "Cuidados Diários" ? "selected" : "" }>Cuidados Diários</li>
+
+                        <li onClick={ () => setCategory( "Casa&Estilo" ) }
+                            className={ category === "Casa&Estilo" ? "selected" : "" }>Casa & Estilo</li>
+                    </>
+                    :
+                    <>
+                        <li onClick={ () => setCategory( "Perfumes" ) }
+                            className={ category === "Perfumes" ? "selected" : "" }>Perfumes</li>
+
+                        <li onClick={ () => setCategory( "Maquiagem" ) }
+                            className={ category === "Maquiagem" ? "selected" : "" }>Maquiagem</li>
+
+                        <li onClick={ () => setCategory( "Cuidados Diários" ) }
+                            className={ category === "Cuidados Diários" ? "selected" : "" }>Cuidados Diários</li>
+                    </> }
             </CategoryField>
 
-            <ListTableFormat theme={themeColor}>
+            <ProductListTableFormat theme={ themeColor }>
                 <li>Imagem</li>
                 <li>Nome</li>
                 <li>Preço</li>
                 <li>Validade</li>
                 <li>Quantidade</li>
                 <li>Ação</li>
-            </ListTableFormat>
+            </ProductListTableFormat>
 
-            { list.map( ( product, index ) => {
-                if ( produtos === "disponivel" ? product.quantity > 0 : product.quantity === 0 )
+            { list.products.map( ( product, index ) => {
+                if ( products === "available" ? product.quantity > 0 && product.category === category : product.quantity === 0 && product.category === category )
                     return (
-                        <ListTable theme={themeColor} key={ index }>
-                            <ListTableFormat theme={themeColor}>
+                        <ListTable theme={ themeColor } key={ index }>
+                            <ProductListTableFormat theme={ themeColor }>
                                 <li><img src={ `${ url }/images/${ brand }/${ product.image }` } alt="Imagem do produto" /></li>
 
                                 <li>{ product.name }</li>
@@ -55,19 +84,25 @@ export const ProductList = ( { produtos }: { produtos: string } ) => {
 
                                 <li>{ product.quantity }</li>
 
-                                <li>
-                                    <button onClick={ () => setProductPopUp( { id: product._id, action: "edit" } ) }>Editar</button>
+                                <ActionButton theme={ themeColor }>
+                                    <button onClick={ () => {
+                                        setPopUp( { id: product._id, action: "edit product" } );
+                                        setType( "Produto" );
+                                    } }>Editar</button>
 
-                                    <button onClick={ () => setProductPopUp( { id: product._id, action: "removal" } ) }>Remover</button>
+                                    <button onClick={ () => {
+                                        setPopUp( { id: product._id, action: "removal" } );
+                                        setType( "Produto" );
+                                    } }>Remover</button>
 
-                                    { productPopUp?.id === product._id && productPopUp.action === "removal" && <RemovalPopUp productId={ product._id } /> }
-                                </li>
-                            </ListTableFormat>
+                                    { popUp?.id === product._id && popUp.action === "removal" && <RemovalPopUp productId={ product._id } /> }
+                                </ActionButton>
+                            </ProductListTableFormat>
 
-                            { productPopUp?.id === product._id && productPopUp.action === "edit" && <EditPopUp productImage={ product.image } /> }
+                            { popUp?.id === product._id && popUp.action === "edit product" && <EditProductPopUp productImage={ product.image } /> }
                         </ListTable>
                     )
             } ) }
-        </ProductListContainer>
+        </ListContainer>
     )
 }

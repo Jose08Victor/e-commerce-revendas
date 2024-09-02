@@ -1,20 +1,20 @@
 import { createContext, useState } from "react";
-import { AdminContextProps, AdminContextProviderProps, ProductData, PopUp, KitData, List, MagazineData } from "../types";
+import { AdminContextProps, AdminContextProviderProps, Themes, ProductData, PopUp, KitData, List, MagazineData } from "../types";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 export const AdminContext = createContext<AdminContextProps | null>( null );
 
-const themes = {
-    avonColor: "#E4004B",
-    naturaColor: "#FF6916",
-    defaultColor: "#4eb2ff"
-};
+export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
+    const themes: Themes = {
+        avonColor: "#E4004B",
+        naturaColor: "#FF6916",
+        defaultColor: "#4eb2ff"
+    };
 
-const AdminContextProvider = ( props: AdminContextProviderProps ) => {
     const url = "http://localhost:4000";
 
-    const [ themeColor, setThemeColor ] = useState<string>( themes.defaultColor );
+    const [ themeColor, setThemeColor ] = useState( [themes.defaultColor ] );
 
     const [ brand, setBrand ] = useState<string>( "/" );
 
@@ -290,7 +290,7 @@ const AdminContextProvider = ( props: AdminContextProviderProps ) => {
         type === "Produto" && setProductData( productData => ( { ...productData, [ event.target.name ]: formattedValue } ) );
     };
 
-    const contextValue = { url, themeColor, setThemeColor, brand, setBrand, type, setType, productData, setProductData, magazineData, setMagazineData, list, popUp, setPopUp, getProductList, getKitList, getMagazineList, addProduct, updateProduct, updateKit, updateMagazineData, removeProduct, removeKit, kitData, setKitData, productName, setProductName, addKit, onChangeHandler, onChangeValidityInput };
+    const contextValue = { url, themes, themeColor, setThemeColor, brand, setBrand, type, setType, productData, setProductData, magazineData, setMagazineData, list, popUp, setPopUp, getProductList, getKitList, getMagazineList, addProduct, updateProduct, updateKit, updateMagazineData, removeProduct, removeKit, kitData, setKitData, productName, setProductName, addKit, onChangeHandler, onChangeValidityInput };
 
     return (
         <AdminContext.Provider value={ contextValue }>
@@ -298,5 +298,3 @@ const AdminContextProvider = ( props: AdminContextProviderProps ) => {
         </AdminContext.Provider>
     )
 };
-
-export default AdminContextProvider;

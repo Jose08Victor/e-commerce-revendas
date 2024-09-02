@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import { MutableRefObject, useContext, useRef } from "react";
-import { AdminContext, themes } from "../../context/adminContext";
+import { AdminContext } from "../../context/adminContext";
 import { HeaderContainer, Logo, Nav, Ul, Links, P, LoginButton, Hamburguer, Menu } from "./styles";
 
 export const Header = () => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
-    const { themeColor, setThemeColor, setBrand } = adminContext;
+    const { themes, themeColor, setThemeColor, setBrand } = adminContext;
 
     const navRef = useRef<HTMLElement | null>( null );
     const avonRef = useRef<HTMLAnchorElement | null>( null );
@@ -31,7 +31,7 @@ export const Header = () => {
             <Link to="/" onClick={ () => {
                 removeClass();
                 setBrand( "/" );
-                setThemeColor( themes.defaultColor );
+                setThemeColor( [themes.defaultColor] );
             } }>
                 <Logo src="https://img.freepik.com/psd-gratuitas/circulo-vermelho_23-2150588573.jpg?semt=sph" alt="Test" />
             </Link>
@@ -50,13 +50,13 @@ export const Header = () => {
                         <Link ref={ avonRef } to="/avon/adicionar-item" onClick={ () => {
                             setBrand( "avon" );
                             toggleClass( avonRef, naturaRef );
-                            setThemeColor( themes.avonColor );
+                            setThemeColor( [themes.avonColor] );
                         } }><P>Produtos Avon</P></Link>
 
                         <Link ref={ naturaRef } to="/natura/adicionar-item" onClick={ () => {
                             setBrand( "natura" );
                             toggleClass( naturaRef, avonRef );
-                            setThemeColor( themes.naturaColor );
+                            setThemeColor( [themes.naturaColor] );
                         } } ><P>Produtos Natura</P></Link>
                     </Links>
 

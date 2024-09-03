@@ -1,68 +1,43 @@
 import { Link } from "react-router-dom";
-import { MutableRefObject, useContext, useRef } from "react";
+import { useContext, useState } from "react";
 import { AdminContext } from "../../context/adminContext";
-import { HeaderContainer, Logo, Nav, Ul, Links, P, LoginButton, Hamburguer, Menu } from "./styles";
+import { HeaderContainer, Logo, Nav, Ul, Links, Li, Hamburguer, Menu } from "./styles";
 
 export const Header = () => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
-    const { themes, themeColor, setThemeColor, setBrand } = adminContext;
+    
+    const { themes, themeColor, setThemeColor, brand, setBrand } = adminContext;
 
-    const navRef = useRef<HTMLElement | null>( null );
-    const avonRef = useRef<HTMLAnchorElement | null>( null );
-    const naturaRef = useRef<HTMLAnchorElement | null>( null );
-
-    const navClass = () => navRef.current?.classList.toggle( "toggle" );
-
-    const toggleClass = ( Ref1: MutableRefObject<HTMLAnchorElement | null>, Ref2: MutableRefObject<HTMLAnchorElement | null> ) => {
-        Ref1.current?.classList.add( "active" );
-        Ref2.current?.classList.remove( "active" );
-        navRef.current?.classList.remove( "toggle" );
-    };
-
-    const removeClass = () => {
-        naturaRef.current?.classList.remove( "active" );
-        avonRef.current?.classList.remove( "active" );
-        navRef.current?.classList.remove( "toggle" );
-    };
+    const [ isToggle, setIsToggle ] = useState( false );
 
     return (
         <HeaderContainer theme={ themeColor }>
-            <Link to="/" onClick={ () => {
-                removeClass();
-                setBrand( "/" );
-                setThemeColor( [themes.defaultColor] );
-            } }>
+            <Link to="/" onClick={ () => { setBrand( "/" ), setIsToggle( false ), setThemeColor( [ themes.defaultColor ] ) } }>
                 <Logo src="https://img.freepik.com/psd-gratuitas/circulo-vermelho_23-2150588573.jpg?semt=sph" alt="Test" />
             </Link>
 
-            <Nav ref={ navRef }>
+            <Nav className={ isToggle ? "toggle" : "" }>
                 <input type="checkbox" id="menu-hamburguer" />
 
                 <label htmlFor="menu-hamburguer">
-                    <Menu onClick={ navClass } >
+                    <Menu onClick={ () => setIsToggle( isToggle ? false : true ) } >
                         <Hamburguer theme={ themeColor }></Hamburguer>
                     </Menu>
                 </label>
 
                 <Ul>
                     <Links theme={ themeColor }>
-                        <Link ref={ avonRef } to="/avon/adicionar-item" onClick={ () => {
-                            setBrand( "avon" );
-                            toggleClass( avonRef, naturaRef );
-                            setThemeColor( [themes.avonColor] );
-                        } }><P>Produtos Avon</P></Link>
+                        <Link to="/avon/adicionar-item" className={ brand === "avon" ? "active" : "" }
+                            onClick={ () => { setBrand( "avon" ), setIsToggle( false ), setThemeColor( [ themes.avonColor ] ) } }>
+                            Produtos Avon</Link>
 
-                        <Link ref={ naturaRef } to="/natura/adicionar-item" onClick={ () => {
-                            setBrand( "natura" );
-                            toggleClass( naturaRef, avonRef );
-                            setThemeColor( [themes.naturaColor] );
-                        } } ><P>Produtos Natura</P></Link>
+                        <Link to="/natura/adicionar-item" className={ brand === "natura" ? "active" : "" }
+                            onClick={ () => { setBrand( "natura" ), setIsToggle( false ), setThemeColor( [ themes.naturaColor ] ) } } >
+                            Produtos Natura</Link>
                     </Links>
 
-                    <li>
-                        <LoginButton theme={ themeColor }>Log out</LoginButton>
-                    </li>
+                    <Li theme={ themeColor }>Log out</Li>
                 </Ul>
             </Nav>
         </HeaderContainer>

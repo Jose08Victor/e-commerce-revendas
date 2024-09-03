@@ -7,14 +7,13 @@ import { ActionButton, ListContainer, ListTable } from "../styles/pageStyles";
 
 export const KitList = () => {
     const adminContext = useContext( AdminContext );
-
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
     const { url, brand, themeColor, popUp, setPopUp, setProductName, list, getKitList, setType } = adminContext;
 
     useEffect( () => {
         getKitList();
-    }, [] );
+    }, [getKitList] );
 
     return (
         <ListContainer theme={ themeColor }>
@@ -62,4 +61,4 @@ export const KitList = () => {
             } ) }
         </ListContainer >
     )
-}
+};

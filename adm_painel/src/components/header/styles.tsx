@@ -71,8 +71,11 @@ export const Links = styled.li`
 
     a {
         cursor: pointer;
+        font-size: 23px;
+        font-weight: 700;
+        color: #E4004B;
 
-        &:last-child p {
+        &:last-child {
             color: #FF6916;
         }
 
@@ -91,25 +94,18 @@ export const Links = styled.li`
             margin-bottom: 18px;
             display: block;
         }
+    }
 `
 
-export const P = styled.p`
-     font-size: 23px;
-    font-weight: 700;
-    color: #E4004B;
-`
-
-export const LoginButton = styled.button`
-    height: 40px;
-    width: 105px;
+export const Li = styled.li`
+    padding: 10px 20px;
     border-radius: 30px;
-    border: none;
     color: white;
     background-color: ${ props => props.theme };
     font-size: 17px;
     font-weight: 700;
     cursor: pointer;
-
+    
     @media (max-width: 900px) {
         margin: 20px 70px;
     }

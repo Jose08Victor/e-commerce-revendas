@@ -2,12 +2,11 @@ import pink_cloud_upload from "../../assets/pink_cloud_upload.svg";
 import orange_cloud_upload from "../../assets/orange_cloud_upload.svg";
 import { useContext } from "react";
 import { AdminContext } from "../../context/adminContext";
-import { AddCategory_Price, AddInput, AddName, AddProductFields, AddSelect, AddValidity_Quantity } from "./styles";
+import { AddCategoryAndPrice, AddInput, AddName, AddProductFields, AddSelect, AddValidityAndQuantity } from "./styles";
 import { FormContainer, AddImgUpload, InputFields, Buttons, AddButton, ChangeButton } from "../styles/componentStyles";
 
 export const AddProduct = () => {
   const adminContext = useContext( AdminContext );
-
   if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
   const { themeColor, productData, setProductData, addProduct, brand, setType, onChangeHandler, onChangeValidityInput } = adminContext;
@@ -32,7 +31,7 @@ export const AddProduct = () => {
             <AddInput theme={ themeColor } onChange={ onChangeHandler } value={ productData.name } type="text" name="name" placeholder="Digite aqui..." required />
           </AddName>
 
-          <AddCategory_Price>
+          <AddCategoryAndPrice>
             <div>
               <p>Categoria :</p>
 
@@ -63,9 +62,9 @@ export const AddProduct = () => {
 
               <AddInput theme={ themeColor } onChange={ onChangeHandler } value={ productData.price } type="Number" name="price" placeholder="R$ -" min={ 0 } max={ 999 } required />
             </div>
-          </AddCategory_Price>
+          </AddCategoryAndPrice>
 
-          <AddValidity_Quantity>
+          <AddValidityAndQuantity>
             <div>
               <p>Validade :</p>
 
@@ -77,7 +76,7 @@ export const AddProduct = () => {
 
               <AddInput theme={ themeColor } type="number" value={ productData.quantity } name="quantity" onChange={ onChangeHandler } placeholder="-" min={ 0 } max={ 99 } required />
             </div>
-          </AddValidity_Quantity>
+          </AddValidityAndQuantity>
         </AddProductFields>
 
         <Buttons>
@@ -88,4 +87,4 @@ export const AddProduct = () => {
       </InputFields>
     </FormContainer>
   )
-}
+};

@@ -1,12 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { AdminContext } from "../../context/adminContext";
-import { Section, DivContainer, Div, Form, Input, ButtonContainer, Button, Label, Label1, H1, H2, ImgContainerDiv, MagazineContainer, ImgContainer, Test } from "./styles";
+import { Section, DivContainer, Div, Form, Input, ButtonContainer, Button, Label, Label1, HOne, HTwo, ImgContainerDiv, MagazineContainer, ImgContainer, Test } from "./styles";
 import { Link } from "react-router-dom";
 import { EditMagazinePopUp } from "../../components/editMagazinePopUp";
 
 export const Home = () => {
     const adminContext = useContext( AdminContext );
-
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
     const { onChangeValidityInput, onChangeHandler, magazineData, setMagazineData, getMagazineList, updateMagazineData, list, themeColor, url, popUp, setPopUp } = adminContext;
@@ -30,20 +29,20 @@ export const Home = () => {
             naturaMagazineImage: null,
             naturaMagazineLink: ""
         } );
-    }
+    };
 
     if ( list.magazine[ 0 ] ) {
         return (
             <Section>
                 <DivContainer>
                     { code !== "Ciclo" && <Div>
-                        <H1 theme={ themeColor }>Ciclo Atual : <span>{ `${ list.magazine[ 0 ].currentCycle }` }</span></H1>
+                        <HOne theme={ themeColor }>Ciclo Atual : <span>{ `${ list.magazine[ 0 ].currentCycle }` }</span></HOne>
 
                         <Button theme={ themeColor } onClick={ () => setHandler( "Ciclo" ) }>Trocar Ciclo ?</Button>
                     </Div> }
 
                     { code === "Ciclo" && <Form theme={ themeColor } onSubmit={ updateMagazineData }>
-                        <H2>Trocar Ciclo :</H2>
+                        <HTwo>Trocar Ciclo :</HTwo>
 
                         <Label htmlFor="ciclo">Ciclo :
                             <Input theme={ themeColor } onChange={ onChangeHandler } value={ magazineData.currentCycle.replace( /\D/g, '' ) } type="text" id="ciclo" maxLength={ 2 } name="currentCycle" required />
@@ -57,13 +56,13 @@ export const Home = () => {
                     </Form> }
 
                     { code !== "Périodo" && <Div>
-                        <H1 theme={ themeColor }>Período : <span>{ `${ list.magazine[ 0 ].startOfCycle }` }</span> até <span>{ `${ list.magazine[ 0 ].endOfCycle }` }</span></H1>
+                        <HOne theme={ themeColor }>Período : <span>{ `${ list.magazine[ 0 ].startOfCycle }` }</span> até <span>{ `${ list.magazine[ 0 ].endOfCycle }` }</span></HOne>
 
                         <Button theme={ themeColor } onClick={ () => setHandler( "Périodo" ) }>Trocar Périodo ?</Button>
                     </Div> }
 
                     { code === "Périodo" && <Form theme={ themeColor } onSubmit={ updateMagazineData }>
-                        <H2>Trocar Período :</H2>
+                        <HTwo>Trocar Período :</HTwo>
                         <Label1 htmlFor="start">Início :
                             <Input theme={ themeColor } id="start" type="text" value={ magazineData.startOfCycle } name="startOfCycle" onChange={ onChangeValidityInput } placeholder="DD/MM" maxLength={ 5 } required />
                         </Label1>
@@ -126,4 +125,4 @@ export const Home = () => {
             </Section>
         )
     }
-}
+};

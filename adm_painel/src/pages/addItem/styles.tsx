@@ -8,7 +8,7 @@ export const Section = styled.section`
     flex-direction: column;
 `
 
-export const H1 = styled.h1`
+export const HOne = styled.h1`
     align-self: start;
     margin: 15px 20px;
     font-size: 30px;

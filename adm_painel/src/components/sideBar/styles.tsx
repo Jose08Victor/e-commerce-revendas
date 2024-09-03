@@ -7,7 +7,7 @@ export const Aside = styled.aside`
     justify-content: space-evenly;
     text-align: center;
     padding: 0px 14px;
-    border-right: 2px solid ${props => props.theme};
+    border-right: 2px solid ${ props => props.theme };
 
     a { 
         width: 150px;
@@ -17,13 +17,13 @@ export const Aside = styled.aside`
         border: 2px solid;
         padding: 5px;
         color: aliceblue;
-        background-color: ${props => props.theme};
+        background-color: ${ props => props.theme };
 
         &:hover,
         &.active {
-            color: ${props => props.theme};
+            color: ${ props => props.theme };
             background-color: aliceblue;
-            border: 2px solid ${props => props.theme};
+            border: 2px solid ${ props => props.theme };
             cursor: pointer;
         }
     }
@@ -31,7 +31,7 @@ export const Aside = styled.aside`
     @media (max-width: 900px) {
         flex-direction: row;
         border-right: none;
-        border-bottom: 2px solid ${props => props.theme};
+        border-bottom: 2px solid ${ props => props.theme };
         padding: 14px;
     }
 

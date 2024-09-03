@@ -5,7 +5,6 @@ import { Aside } from "./styles";
 
 export const SideBar = () => {
     const adminContext = useContext( AdminContext );
-
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
     const { brand, themeColor } = adminContext;

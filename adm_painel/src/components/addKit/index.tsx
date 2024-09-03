@@ -2,17 +2,18 @@ import pink_cloud_upload from "../../assets/pink_cloud_upload.svg";
 import orange_cloud_upload from "../../assets/orange_cloud_upload.svg";
 import { useContext, useRef } from "react";
 import { AdminContext } from "../../context/adminContext";
-import { AddKitFields, AddPrice_Quantity1 } from "./styles";
+import { AddKitFields, AddPriceAndQuantity1 } from "./styles";
 import { FormContainer, AddImgUpload, InputFields, Buttons, AddButton, ChangeButton, Input, InputName, Label, NameList } from "../styles/componentStyles";
 
 export const AddKit = () => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
+
     const { brand, setType, themeColor, kitData, setKitData, productName, setProductName, addKit } = adminContext;
 
     const text = useRef<HTMLInputElement | null>( null );
 
-    const onChangeHandler = ( e: React.ChangeEvent<HTMLInputElement> ) => setKitData( data => ( { ...data, [ e.target.name ]: e.target.value } ) )
+    const onChangeHandler = ( e: React.ChangeEvent<HTMLInputElement> ) => setKitData( data => ( { ...data, [ e.target.name ]: e.target.value } ) );
 
     return (
         <FormContainer onSubmit={ addKit }>
@@ -57,7 +58,7 @@ export const AddKit = () => {
                         </NameList>
                     </ul>
 
-                    <AddPrice_Quantity1>
+                    <AddPriceAndQuantity1>
                         <div>
                             <p>Preço :</p>
 
@@ -69,7 +70,7 @@ export const AddKit = () => {
 
                             <Input theme={ themeColor } type="number" value={ kitData.quantity } name="quantity" onChange={ onChangeHandler } placeholder="-" min={ 0 } max={ 99 } required />
                         </div>
-                    </AddPrice_Quantity1>
+                    </AddPriceAndQuantity1>
                 </AddKitFields>
 
                 <Buttons>
@@ -80,4 +81,4 @@ export const AddKit = () => {
             </InputFields>
         </FormContainer>
     )
-}
+};

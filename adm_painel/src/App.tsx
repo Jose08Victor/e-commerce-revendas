@@ -12,7 +12,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App () {
   const adminContext = useContext( AdminContext );
-
   if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
   const { brand } = adminContext;

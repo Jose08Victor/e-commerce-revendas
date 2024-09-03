@@ -3,12 +3,11 @@ import { AdminContext } from "../../context/adminContext";
 import pink_cloud_upload from "../../assets/pink_cloud_upload.svg";
 import orange_cloud_upload from "../../assets/orange_cloud_upload.svg";
 import arrow_icon from "../../assets/arrow_icon.png";
-import { ArrowIcon, CurrentImg, EditBackground, EditContainer, ImgContainer, ImgUpload, Input, InputName, EditButton, Label, AddPrice_Quantity } from "../styles/componentStyles";
+import { ArrowIcon, CurrentImg, EditBackground, EditContainer, ImgContainer, ImgUpload, Input, InputName, EditButton, Label, AddPriceAndQuantity } from "../styles/componentStyles";
 import { EditKitTitle, KitNameList } from "./styles";
 
 export const EditKitPopUp = ( { productImage }: { productImage: File } ) => {
     const adminContext = useContext( AdminContext );
-
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
     const { themeColor, url, brand, kitData, setKitData, productName, setProductName, setPopUp, updateKit, onChangeHandler } = adminContext;
@@ -82,7 +81,7 @@ export const EditKitPopUp = ( { productImage }: { productImage: File } ) => {
                     </KitNameList>
                 </ul>
 
-                <AddPrice_Quantity>
+                <AddPriceAndQuantity>
                     <div>
                         <p>Editar preço ?</p>
 
@@ -94,10 +93,10 @@ export const EditKitPopUp = ( { productImage }: { productImage: File } ) => {
 
                         <Input onChange={ onChangeHandler } theme={ themeColor } type="number" value={ kitData.quantity } name="quantity" placeholder="-" min={ 0 } max={ 99 } />
                     </div>
-                </AddPrice_Quantity>
+                </AddPriceAndQuantity>
 
                 <EditButton theme={ themeColor } onClick={ () => setKitData( kitData => ( { ...kitData, [ "nameOfProducts" ]: productName } ) ) } type="submit">Confirmar</EditButton>
             </EditContainer>
         </EditBackground>
     )
-}
+};

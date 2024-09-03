@@ -20,11 +20,11 @@ export const AddProductFields = styled.div`
     }
 `
 
-export const AddInput = styled(Input)`
+export const AddInput = styled( Input )`
     margin-bottom: 15px;
 `
 
-export const AddSelect = styled(Select)`
+export const AddSelect = styled( Select )`
     margin-bottom: 15px;
 `
 
@@ -44,7 +44,7 @@ export const AddName = styled.div`
     }
 `
 
-export const AddCategory_Price = styled.div`
+export const AddCategoryAndPrice = styled.div`
     display: flex;
     justify-content: space-between;
 
@@ -79,7 +79,7 @@ export const AddCategory_Price = styled.div`
     }
 `
 
-export const AddValidity_Quantity = styled(AddCategory_Price)`
+export const AddValidityAndQuantity = styled( AddCategoryAndPrice )`
     margin-bottom: 20px;
 
     :first-child input {

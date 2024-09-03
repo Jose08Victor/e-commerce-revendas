@@ -302,7 +302,7 @@ export const EditTitle = styled.div`
 
         &:hover {
             transform: scale(1.2);
-            color: ${props => props.theme};
+            color: ${ props => props.theme };
         }
     }
 
@@ -334,8 +334,9 @@ export const ImgContainer = styled.div`
         gap: 5%;
         margin-bottom: 15px;
 
-     p {
-        padding-bottom: 6px;
+        p {
+            padding-bottom: 6px;
+        }
     }
 `
 
@@ -346,13 +347,13 @@ export const EditButton = styled.button`
     border: 2px solid;
     padding: 15px;
     color: aliceblue;
-    background-color: ${props => props.theme};
+    background-color: ${ props => props.theme };
     align-self: center;
 
     &:hover {
-        color: ${props => props.theme};
+        color: ${ props => props.theme };
         background-color: aliceblue;
-        border: 2px solid ${props => props.theme};
+        border: 2px solid ${ props => props.theme };
         cursor: pointer;
     }
 
@@ -375,10 +376,10 @@ export const Label = styled.label`
     width: 17.5%;
     font-size: 15px;
     display: inline-block;
-    background-color: ${props => props.theme};
+    background-color: ${ props => props.theme };
     color: aliceblue;
     padding: 6px 5px;
-    border: 2px solid ${props => props.theme};
+    border: 2px solid ${ props => props.theme };
     border-left: none;
     border-radius: 10px;
     border-top-left-radius: 0px;
@@ -386,9 +387,9 @@ export const Label = styled.label`
     text-align: center;
 
     &:hover {
-        color: ${props => props.theme};
+        color: ${ props => props.theme };
         background-color: aliceblue;
-        border: 2px solid ${props => props.theme};
+        border: 2px solid ${ props => props.theme };
         border-left: none;
         cursor: pointer;
     }
@@ -415,7 +416,7 @@ export const NameList = styled.ul`
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: ${props => props.theme};
+        background-color: ${ props => props.theme };
         border-radius: 25px;
     }
     
@@ -426,7 +427,7 @@ export const NameList = styled.ul`
         padding: 5px;
         
         h4 {
-            border-bottom: 1px solid ${props => props.theme};
+            border-bottom: 1px solid ${ props => props.theme };
             max-width: 95%;
             font-weight: 600;
         }
@@ -438,7 +439,7 @@ export const NameList = styled.ul`
             transition: ease-in-out .3s;
 
             &:hover {
-                color: ${props => props.theme};
+                color: ${ props => props.theme };
                 transform: scale(1.4);
             }
         }
@@ -459,7 +460,7 @@ export const NameList = styled.ul`
     }
 `
 
-export const AddPrice_Quantity = styled.div`
+export const AddPriceAndQuantity = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;

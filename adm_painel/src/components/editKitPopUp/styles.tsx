@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { EditTitle, NameList } from "../styles/componentStyles";
 
-export const EditKitTitle = styled(EditTitle)`
+export const EditKitTitle = styled( EditTitle )`
     margin-bottom: 10px;
 `
 
-export const KitNameList = styled(NameList)`
+export const KitNameList = styled( NameList )`
     max-height: 118px;
     margin: 8px 0;
 

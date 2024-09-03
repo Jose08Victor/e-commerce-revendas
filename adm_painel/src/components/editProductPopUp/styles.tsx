@@ -14,7 +14,7 @@ export const EditName = styled.div`
     }
 `
 
-export const EditCategory_Price = styled(EditName)`
+export const EditCategoryAndPrice = styled( EditName )`
     display: flex;
     justify-content: space-between;
 
@@ -39,7 +39,7 @@ export const EditCategory_Price = styled(EditName)`
     }
 `
 
-export const EditValidity_Quantity = styled(EditCategory_Price)`
+export const EditValidityAndQuantity = styled( EditCategoryAndPrice )`
     :first-child input {
         width: 200px;
     }

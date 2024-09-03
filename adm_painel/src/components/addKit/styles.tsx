@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { AddPrice_Quantity } from "../styles/componentStyles";
+import { AddPriceAndQuantity } from "../styles/componentStyles";
 
 export const AddKitFields = styled.div`
     width: 54vw;
@@ -23,7 +23,7 @@ export const AddKitFields = styled.div`
         }
     }
 `
-export const AddPrice_Quantity1 = styled(AddPrice_Quantity)`
+export const AddPriceAndQuantity1 = styled( AddPriceAndQuantity )`
     margin-bottom: 20px;
 
     @media (max-width: 375px) {

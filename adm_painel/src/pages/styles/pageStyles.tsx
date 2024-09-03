@@ -8,11 +8,11 @@ export const ListContainer = styled.section`
     &::-webkit-scrollbar {
         width: 6px;
         height: 4px;
-        border-left: ${props => props.theme} 1px solid;
+        border-left: ${ props => props.theme } 1px solid;
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: ${props => props.theme};
+        background-color: ${ props => props.theme };
         border-radius: 25px;
     }
 `
@@ -22,7 +22,7 @@ export const ListTableFormat = styled.ul`
     grid-template-columns: .5fr 2fr .5fr .6fr .5fr .5fr;
     align-items: center;
     padding: 10px 14px;
-    border-bottom: 1px solid ${props => props.theme};
+    border-bottom: 1px solid ${ props => props.theme };
     width: 100%;
     text-align: center;
     font-weight: 500;
@@ -35,8 +35,9 @@ export const ListTableFormat = styled.ul`
         font-size: 13px;
         padding: 6px 8px;
 
-    &:nth-child(2) {
-        font-size: 12px;
+        &:nth-child(2) {
+            font-size: 12px;
+        }
     }
 `
 
@@ -44,7 +45,7 @@ export const ListTable = styled.div`
     ul img {
         width: 68px;
         max-height: 68px;
-        border: 1px solid ${props => props.theme};
+        border: 1px solid ${ props => props.theme };
         border-radius: 15px;
     }
         
@@ -69,13 +70,13 @@ export const ActionButton = styled.li`
         border: 2px solid;
         padding: 8px;
         color: aliceblue;
-        background-color: ${props => props.theme};
+        background-color: ${ props => props.theme };
         font-weight: 500;
 
         &:hover {
-            color: ${props => props.theme};
+            color: ${ props => props.theme };
             background-color: aliceblue;
-            border: 2px solid ${props => props.theme};
+            border: 2px solid ${ props => props.theme };
             cursor: pointer;
         }
     }

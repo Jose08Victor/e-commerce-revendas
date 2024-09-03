@@ -3,12 +3,11 @@ import { AdminContext } from "../../context/adminContext";
 import pink_cloud_upload from "../../assets/pink_cloud_upload.svg";
 import orange_cloud_upload from "../../assets/orange_cloud_upload.svg";
 import arrow_icon from "../../assets/arrow_icon.png";
-import { EditCategory_Price, EditName, EditSelect, EditInput, EditValidity_Quantity } from "./styles";
+import { EditCategoryAndPrice, EditName, EditSelect, EditInput, EditValidityAndQuantity } from "./styles";
 import { ArrowIcon, CurrentImg, EditTitle, EditBackground, EditContainer, ImgContainer, ImgUpload, EditButton } from "../styles/componentStyles";
 
 export const EditProductPopUp = ( { productImage }: { productImage: File } ) => {
     const adminContext = useContext( AdminContext );
-
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
     const { themeColor, url, brand, productData, setProductData, setPopUp, updateProduct, onChangeHandler, onChangeValidityInput } = adminContext;
@@ -58,7 +57,7 @@ export const EditProductPopUp = ( { productImage }: { productImage: File } ) => 
                     <EditInput theme={ themeColor } value={ productData.name } onChange={ onChangeHandler } type="text" name="name" placeholder="Digite aqui..." />
                 </EditName>
 
-                <EditCategory_Price>
+                <EditCategoryAndPrice>
                     <div>
                         <p>Editar Categoria ?</p>
 
@@ -89,9 +88,9 @@ export const EditProductPopUp = ( { productImage }: { productImage: File } ) => 
 
                         <EditInput theme={ themeColor } value={ productData.price } onChange={ onChangeHandler } type="Number" name="price" placeholder="R$ -" min={ 0 } max={ 999 } />
                     </div>
-                </EditCategory_Price>
+                </EditCategoryAndPrice>
 
-                <EditValidity_Quantity>
+                <EditValidityAndQuantity>
                     <div>
                         <p>Editar Validade ?</p>
 
@@ -103,10 +102,10 @@ export const EditProductPopUp = ( { productImage }: { productImage: File } ) => 
 
                         <EditInput theme={ themeColor } type="number" value={ productData.quantity } onChange={ onChangeHandler } name="quantity" placeholder="-" min={ 0 } max={ 99 } />
                     </div>
-                </EditValidity_Quantity>
+                </EditValidityAndQuantity>
 
                 <EditButton theme={ themeColor } type="submit">Confirmar</EditButton>
             </EditContainer>
         </EditBackground>
     )
-}
+};

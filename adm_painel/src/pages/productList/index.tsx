@@ -7,7 +7,6 @@ import { ActionButton, ListContainer, ListTable } from "../styles/pageStyles";
 
 export const ProductList = ( { products }: { products: string } ) => {
     const adminContext = useContext( AdminContext );
-
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
     const { url, brand, list, popUp, setPopUp, getProductList, themeColor, setType } = adminContext;
@@ -105,4 +104,4 @@ export const ProductList = ( { products }: { products: string } ) => {
             } ) }
         </ListContainer>
     )
-}
+};

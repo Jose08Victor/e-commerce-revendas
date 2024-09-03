@@ -42,7 +42,7 @@ export const Form = styled.form`
     justify-content: center;
 `
 
-export const H1 = styled.h1`
+export const HOne = styled.h1`
     margin-bottom: 20px;
 
     span {
@@ -50,7 +50,7 @@ export const H1 = styled.h1`
     }
 `
 
-export const H2 = styled.h2`
+export const HTwo = styled.h2`
     margin-bottom: 10px;
 `
 

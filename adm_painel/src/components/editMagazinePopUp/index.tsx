@@ -8,7 +8,6 @@ import { ArrowIcon, CurrentImg, EditTitle, EditBackground, EditContainer, ImgCon
 
 export const EditMagazinePopUp = () => {
     const adminContext = useContext( AdminContext );
-
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
     const { themeColor, url, magazineData, setMagazineData, setPopUp, updateMagazineData, onChangeHandler, popUp } = adminContext;
@@ -78,4 +77,4 @@ export const EditMagazinePopUp = () => {
             </EditContainer>
         </EditBackground>
     )
-}
+};

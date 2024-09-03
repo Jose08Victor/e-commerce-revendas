@@ -4,7 +4,6 @@ import { RemovalPopUpContainer } from "./styles";
 
 export const RemovalPopUp = ( { productId }: { productId: string } ) => {
     const adminContext = useContext( AdminContext );
-
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
     const { type, setPopUp, removeProduct, removeKit } = adminContext;

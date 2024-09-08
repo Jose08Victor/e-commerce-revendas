@@ -8,7 +8,7 @@ import magazineDataRouter from "./routes/magazineDataRoute.js";
 
 //app config
 const app = express();
-const port = 4000;
+const port = 4000 || "https://marlene-cosmeticos-server.onrender.com";
 
 //middleware
 app.use(express.json());

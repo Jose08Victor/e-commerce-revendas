@@ -12,7 +12,7 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
         defaultColor: "#4eb2ff"
     };
 
-    const url = "http://localhost:10000";
+    const url = "https://marlene-cosmeticos-server.onrender.com";
 
     const [ themeColor, setThemeColor ] = useState( [themes.defaultColor ] );
 

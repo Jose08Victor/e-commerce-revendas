@@ -8,7 +8,7 @@ import magazineDataRouter from "./routes/magazineDataRoute.js";
 
 //app config
 const app = express();
-const port = "https://marlene-cosmeticos-server.onrender.com";
+const port = process.env.PORT || 4000;
 
 //middleware
 app.use(express.json());
@@ -27,3 +27,7 @@ app.use("/images/natura", express.static('uploads/natura'));
 app.use("/images/magazineData", express.static('uploads/magazineImage'));
 
 app.get("/", (_, res) => res.send("API Working"));
+
+app.listen(port, () => {
+  console.log(`app listening on port ${port}`)
+});

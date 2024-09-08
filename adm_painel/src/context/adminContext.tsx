@@ -12,7 +12,7 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
         defaultColor: "#4eb2ff"
     };
 
-    const url = "http://localhost:4000";
+    const url = "http://localhost:10000";
 
     const [ themeColor, setThemeColor ] = useState( [themes.defaultColor ] );
 

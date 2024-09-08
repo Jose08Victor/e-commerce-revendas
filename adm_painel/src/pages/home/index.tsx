@@ -10,7 +10,7 @@ export const Home = () => {
 
     const { onChangeValidityInput, onChangeHandler, magazineData, setMagazineData, getMagazineList, updateMagazineData, list, themeColor, url, popUp, setPopUp } = adminContext;
 
-    useEffect( () => { getMagazineList() }, [getMagazineList] );
+    useEffect( () => { getMagazineList() }, [] );
 
     useEffect( () => setCode( "" ), [ list ] );
 

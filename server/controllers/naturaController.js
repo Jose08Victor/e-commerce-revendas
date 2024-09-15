@@ -1,16 +1,20 @@
 import { naturaProductModel, naturaKitModel } from "../models/naturaModel.js";
-import fs from "fs";
+import { deleteImage, imageHandler } from "../middlewares/index.js";
 
 export const addNaturaProduct = async (req, res) => {
-    const natura = new naturaProductModel({
-        name: req.body.name,
-        image: req.file.filename,
-        price: Number(req.body.price),
-        category: req.body.category,
-        quantity: Number(req.body.quantity),
-        validity: req.body.validity
-    });
     try {
+        const { newName, url } = await imageHandler(req.file, "images/natura/products/");
+
+        const natura = new naturaProductModel({
+            name: req.body.name,
+            imageName: newName,
+            imageURL: url,
+            price: Number(req.body.price),
+            category: req.body.category,
+            quantity: Number(req.body.quantity),
+            validity: req.body.validity
+        });
+
         await natura.save();
         res.json({ success: true, message: "Produto Adicionado" });
     } catch (error) {
@@ -20,13 +24,17 @@ export const addNaturaProduct = async (req, res) => {
 };
 
 export const addNaturaKit = async (req, res) => {
-    const natura = new naturaKitModel({
-        nameOfProducts: req.body.nameOfProducts.split("//"),
-        image: req.file.filename,
-        price: Number(req.body.price),
-        quantity: Number(req.body.quantity)
-    });
     try {
+        const { newName, url } = await imageHandler(req.file, "images/natura/kits/");
+
+        const natura = new naturaKitModel({
+            nameOfProducts: req.body.nameOfProducts.split("//"),
+            imageName: newName,
+            imageURL: url,
+            price: Number(req.body.price),
+            quantity: Number(req.body.quantity)
+        });
+
         await natura.save();
         res.json({ success: true, message: "Kit Adicionado" });
     } catch (error) {
@@ -61,18 +69,21 @@ export const updateNaturaProduct = async (req, res) => {
         const data = { ...req.body };
 
         if (req.file) {
-            fs.unlink(`uploads/natura/${product.image}`, () => { });
-            data.image = `${req.file.filename}`;
+            await deleteImage(product.imageName, "images/natura/products/");
+            const { newName, url } = await imageHandler(req.file, "images/natura/products/");
+
+            data.imageName = newName;
+            data.imageURL = url;
         };
 
         await naturaProductModel.findByIdAndUpdate(req.params.id, data);
         res.json({ success: true, message: "Produto Atualizado" });
-        
+
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: "Erro ao atualizar o produto" });
     };
-}
+};
 
 export const updateNaturaKit = async (req, res) => {
     try {
@@ -80,8 +91,11 @@ export const updateNaturaKit = async (req, res) => {
         const data = { ...req.body };
 
         if (req.file) {
-            fs.unlink(`uploads/natura/${kit.image}`, () => { });
-            data.image = `${req.file.filename}`;
+            await deleteImage(kit.imageName, "images/natura/kits/");
+            const { newName, url } = await imageHandler(req.file, "images/natura/kits/");
+
+            data.imageName = newName;
+            data.imageURL = url;
         };
 
         if (req.body.nameOfProducts) data.nameOfProducts = req.body.nameOfProducts.split("//");
@@ -97,8 +111,9 @@ export const updateNaturaKit = async (req, res) => {
 export const deleteNaturaProduct = async (req, res) => {
     try {
         const product = await naturaProductModel.findById(req.params.id);
-        fs.unlink(`uploads/natura/${product.image}`, () => { });
+        await deleteImage(product.imageName, "images/natura/products/");
         await naturaProductModel.findByIdAndDelete(req.params.id);
+
         res.json({ success: true, message: "Produto Removido" });
     } catch (error) {
         console.log(error);
@@ -109,8 +124,9 @@ export const deleteNaturaProduct = async (req, res) => {
 export const deleteNaturaKit = async (req, res) => {
     try {
         const kit = await naturaKitModel.findById(req.params.id);
-        fs.unlink(`uploads/natura/${kit.image}`, () => { });
+        await deleteImage(kit.imageName, "images/natura/kits/");
         await naturaKitModel.findByIdAndDelete(req.params.id);
+
         res.json({ success: true, message: "Kit Removido" });
     } catch (error) {
         console.log(error);

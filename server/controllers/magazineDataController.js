@@ -1,5 +1,5 @@
 import { magazineDataModel } from "../models/magazineDataModel.js";
-import fs from "fs";
+import { deleteImage, imageHandler } from "../middlewares/index.js";
 
 export const magazineDataList = async (_, res) => {
     try {
@@ -7,7 +7,7 @@ export const magazineDataList = async (_, res) => {
         res.json({ success: true, data: magazineData });
     } catch (error) {
         console.log(error);
-        res.json({ success: false, message: "Error" });
+        res.json({ success: false, message: "Erro ao carregar as revistas" });
     };
 };
 
@@ -17,22 +17,30 @@ export const updateMagazineData = async (req, res) => {
         const data = { ...req.body };
 
         if (req.file && req.body.magazine === "avon") {
-            fs.unlink(`uploads/magazineImage/${magazineData.avonMagazineImage}`, () => { });
-            data.avonMagazineImage = `${req.file.filename}`;
+            await deleteImage(magazineData.avonMagazineImageName, "images/magazines/");
+            const { newName, url } = await imageHandler(req.file, "images/magazines/");
+
+            data.avonMagazineImageName = newName;
+            data.avonMagazineImageURL = url;
         };
 
         if (req.file && req.body.magazine === "natura") {
-            fs.unlink(`uploads/magazineImage/${magazineData.naturaMagazineImage}`, () => { });
-            data.naturaMagazineImage = `${req.file.filename}`;
+            await deleteImage(magazineData.naturaMagazineImageName, "images/magazines/");
+            const { newName, url } = await imageHandler(req.file, "images/magazines/");
+
+            data.naturaMagazineImageName = newName;
+            data.naturaMagazineImageURL = url;
         };
 
         if (req.file && req.body.magazine === "casa&estilo") {
-            fs.unlink(`uploads/magazineImage/${magazineData.casa_estiloMagazineImage}`, () => { });
-            data.casa_estiloMagazineImage = `${req.file.filename}`;
+            await deleteImage(magazineData.casa_estiloMagazineImageName, "images/magazines/");
+            const { newName, url } = await imageHandler(req.file, "images/magazines/");
+
+            data.casa_estiloMagazineImageName = newName;
+            data.casa_estiloMagazineImageURL = url;
         };
 
         await magazineDataModel.findByIdAndUpdate(req.params.id, data);
-
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: "Erro ao atualizar" });

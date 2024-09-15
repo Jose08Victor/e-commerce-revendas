@@ -1,32 +1,40 @@
 import { avonProductModel, avonKitModel } from "../models/avonModel.js";
-import fs from "fs";
+import { deleteImage, imageHandler } from "../middlewares/index.js";
 
 export const addAvonProduct = async (req, res) => {
-    const avon = new avonProductModel({
-        name: req.body.name,
-        image: req.file.filename,
-        price: Number(req.body.price),
-        category: req.body.category,
-        quantity: Number(req.body.quantity),
-        validity: req.body.validity
-    });
     try {
+        const { newName, url } = await imageHandler(req.file, "images/avon/products/");
+
+        const avon = new avonProductModel({
+            name: req.body.name,
+            imageName: newName,
+            imageURL: url,
+            price: Number(req.body.price),
+            category: req.body.category,
+            quantity: Number(req.body.quantity),
+            validity: req.body.validity
+        });
+
         await avon.save();
         res.json({ success: true, message: "Produto Adicionado" });
     } catch (error) {
         console.log(error);
-        res.json({ success: false, message: "Erro ao adicionar o produto" });
-    };
+        res.status(500).json({ success: false, message: "Erro ao adicionar o produto" });
+    }
 };
 
 export const addAvonKit = async (req, res) => {
-    const avon = new avonKitModel({
-        nameOfProducts: req.body.nameOfProducts.split("//"),
-        image: req.file.filename,
-        price: Number(req.body.price),
-        quantity: Number(req.body.quantity)
-    });
     try {
+        const { newName, url } = await imageHandler(req.file, "images/avon/kits/");
+
+        const avon = new avonKitModel({
+            nameOfProducts: req.body.nameOfProducts.split("//"),
+            imageName: newName,
+            imageURL: url,
+            price: Number(req.body.price),
+            quantity: Number(req.body.quantity)
+        });
+
         await avon.save();
         res.json({ success: true, message: "Kit Adicionado" });
     } catch (error) {
@@ -61,13 +69,16 @@ export const updateAvonProduct = async (req, res) => {
         const data = { ...req.body };
 
         if (req.file) {
-            fs.unlink(`uploads/avon/${product.image}`, () => { });
-            data.image = `${req.file.filename}`;
+            await deleteImage(product.imageName, "images/avon/products/");
+            const { newName, url } = await imageHandler(req.file, "images/avon/products/");
+
+            data.imageName = newName;
+            data.imageURL = url;
         };
 
         await avonProductModel.findByIdAndUpdate(req.params.id, data);
         res.json({ success: true, message: "Produto Atualizado" });
-        
+
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: "Erro ao atualizar o produto" });
@@ -80,8 +91,11 @@ export const updateAvonKit = async (req, res) => {
         const data = { ...req.body };
 
         if (req.file) {
-            fs.unlink(`uploads/avon/${kit.image}`, () => { });
-            data.image = `${req.file.filename}`;
+            await deleteImage(kit.imageName, "images/avon/kits/");
+            const { newName, url } = await imageHandler(req.file, "images/avon/kits/");
+
+            data.imageName = newName;
+            data.imageURL = url;
         };
 
         if (req.body.nameOfProducts) data.nameOfProducts = req.body.nameOfProducts.split("//");
@@ -97,7 +111,8 @@ export const updateAvonKit = async (req, res) => {
 export const deleteAvonProduct = async (req, res) => {
     try {
         const product = await avonProductModel.findById(req.params.id);
-        fs.unlink(`uploads/avon/${product.image}`, () => { });
+        await deleteImage(product.imageName, "images/avon/products/");
+
         await avonProductModel.findByIdAndDelete(req.params.id);
         res.json({ success: true, message: "Produto Removido" });
     } catch (error) {
@@ -109,8 +124,9 @@ export const deleteAvonProduct = async (req, res) => {
 export const deleteAvonKit = async (req, res) => {
     try {
         const kit = await avonKitModel.findById(req.params.id);
-        fs.unlink(`uploads/avon/${kit.image}`, () => { });
+        await deleteImage(kit.imageName, "images/avon/kits/");
         await avonKitModel.findByIdAndDelete(req.params.id);
+
         res.json({ success: true, message: "Kit Removido" });
     } catch (error) {
         console.log(error);

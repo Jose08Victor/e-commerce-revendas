@@ -22,10 +22,6 @@ app.use("/api/avon", avonRouter);
 app.use("/api/natura", naturaRouter);
 app.use("/api/magazineData", magazineDataRouter);
 
-app.use("/images/avon", express.static('uploads/avon'));
-app.use("/images/natura", express.static('uploads/natura'));
-app.use("/images/magazineData", express.static('uploads/magazineImage'));
-
 app.get("/", (_, res) => res.send("API Working"));
 
 app.listen(port, () => {

@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 
 const avonProductSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    image: { type: String, required: true },
+    imageName: { type: String, required: true },
+    imageURL: { type: String, required: true },
     price: { type: Number, required: true },
     category: { type: String, required: true },
     quantity: { type: Number, required: true },
@@ -11,7 +12,8 @@ const avonProductSchema = new mongoose.Schema({
 
 const avonKitSchema = new mongoose.Schema({
     nameOfProducts: {type: Array, required: true},
-    image: { type: String, required: true },
+    imageName: { type: String, required: true },
+    imageURL: { type: String, required: true },
     price: { type: Number, required: true },
     quantity: { type: Number, required: true },
 });

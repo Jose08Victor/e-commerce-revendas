@@ -4,14 +4,7 @@ import multer from "multer";
 
 const avonRouter = express.Router();
 
-//Image Storage Engine
-const storage = multer.diskStorage({
-    destination: "uploads/avon",
-    filename: (_, file, cb) => {
-        return cb(null, `${Date.now()}${file.originalname}`);
-    }
-});
-
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 avonRouter.post("/addProduct", upload.single("image"), addAvonProduct);

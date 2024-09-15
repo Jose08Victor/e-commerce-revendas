@@ -4,14 +4,7 @@ import multer from "multer";
 
 const naturaRouter = express.Router();
 
-//Image Storage Engine
-const storage = multer.diskStorage({
-    destination: "uploads/natura",
-    filename: (_, file, cb) => {
-        return cb(null, `${Date.now()}${file.originalname}`);
-    }
-});
-
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 naturaRouter.post("/addProduct", upload.single("image"), addNaturaProduct);

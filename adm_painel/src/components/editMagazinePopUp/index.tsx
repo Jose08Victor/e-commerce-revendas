@@ -10,15 +10,15 @@ export const EditMagazinePopUp = () => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
-    const { themeColor, url, magazineData, setMagazineData, setPopUp, updateMagazineData, onChangeHandler, popUp } = adminContext;
+    const { themeColor, magazineData, setMagazineData, setPopUp, updateMagazineData, onChangeHandler, popUp } = adminContext;
 
-    const test = () => {
+    const onImageHandler = () => {
         if ( popUp?.imageName === "avonMagazineImage" ) return magazineData.avonMagazineImage ? URL.createObjectURL( magazineData.avonMagazineImage ) : pink_cloud_upload;
         if ( popUp?.imageName === "casa_estiloMagazineImage" ) return magazineData.casa_estiloMagazineImage ? URL.createObjectURL( magazineData.casa_estiloMagazineImage ) : pink_cloud_upload;
         if ( popUp?.imageName === "naturaMagazineImage" ) return magazineData.naturaMagazineImage ? URL.createObjectURL( magazineData.naturaMagazineImage ) : orange_cloud_upload;
     }
 
-    const onHandlerValue = () => {
+    const onValueHandler = () => {
         if ( popUp?.linkName === "avonMagazineLink" ) return magazineData.avonMagazineLink;
         if ( popUp?.linkName === "casa_estiloMagazineLink" ) return magazineData.casa_estiloMagazineLink;
         if ( popUp?.linkName === "naturaMagazineLink" ) return magazineData.naturaMagazineLink;
@@ -50,7 +50,7 @@ export const EditMagazinePopUp = () => {
                     <div>
                         <p>Imagem atual</p>
 
-                        <CurrentImg src={ `${ url }/images/magazineData/${ popUp?.image }` } alt="Imagem do produto" />
+                        <CurrentImg src={ popUp?.image } alt="Imagem do produto" />
                     </div>
 
                     <ArrowIcon src={ arrow_icon } alt="Arrow Icon" />
@@ -59,7 +59,7 @@ export const EditMagazinePopUp = () => {
                         <p>Trocar imagem ?</p>
 
                         <label htmlFor="image">
-                            <ImgUpload src={ test() } alt="Upload Area Image" />
+                            <ImgUpload src={ onImageHandler() } alt="Upload Area Image" />
                         </label>
 
                         <input onChange={ ( e ) => setMagazineData( magazineData => ( { ...magazineData, [ e.target.name ]: e.target.files ? e.target.files[ 0 ] : null } ) ) } type="file" id="image" name={ popUp?.imageName } hidden />
@@ -70,7 +70,7 @@ export const EditMagazinePopUp = () => {
                     <p onClick={ () => console.log( magazineData )
                     }>Editar Link ?</p>
 
-                    <EditInput theme={ themeColor } value={ onHandlerValue() } onChange={ onChangeHandler } type="text" name={ popUp?.linkName } placeholder="Digite aqui..." />
+                    <EditInput theme={ themeColor } value={ onValueHandler() } onChange={ onChangeHandler } type="text" name={ popUp?.linkName } placeholder="Digite aqui..." />
                 </EditName>
 
                 <EditButton theme={ themeColor } type="submit">Confirmar</EditButton>

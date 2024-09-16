@@ -148,7 +148,7 @@ export const ImgContainer = styled.div`
     }
 `
 
-export const Test = styled.div`
+export const DivImg = styled.div`
     position: absolute;
     top: 0;
     width: 100%;

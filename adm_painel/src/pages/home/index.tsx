@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AdminContext } from "../../context/adminContext";
-import { Section, DivContainer, Div, Form, Input, ButtonContainer, Button, Label, Label1, HOne, HTwo, ImgContainerDiv, MagazineContainer, ImgContainer, Test } from "./styles";
+import { Section, DivContainer, Div, Form, Input, ButtonContainer, Button, Label, Label1, HOne, HTwo, ImgContainerDiv, MagazineContainer, ImgContainer, DivImg } from "./styles";
 import { Link } from "react-router-dom";
 import { EditMagazinePopUp } from "../../components/editMagazinePopUp";
 
@@ -8,7 +8,7 @@ export const Home = () => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
-    const { onChangeValidityInput, onChangeHandler, magazineData, setMagazineData, getMagazineList, updateMagazineData, list, themeColor, url, popUp, setPopUp } = adminContext;
+    const { onChangeValidityInput, onChangeHandler, magazineData, setMagazineData, getMagazineList, updateMagazineData, list, themeColor, popUp, setPopUp } = adminContext;
 
     useEffect( () => { getMagazineList() }, [] );
 
@@ -83,13 +83,13 @@ export const Home = () => {
                         <h2>Revista Avon :</h2>
 
                         <ImgContainer theme={ themeColor }>
-                            <img src={ `${ url }/images/magazineData/${ list.magazine[ 0 ].avonMagazineImage }` } alt="" />
+                            <img src={ list.magazine[ 0 ].avonMagazineImageURL } alt="Avon Magazine" />
 
-                            <Test>
+                            <DivImg>
                                 <Link to={ list.magazine[ 0 ].avonMagazineLink } target="_blank" ><Button theme={ themeColor }>Ver Revista</Button></Link>
 
-                                <Button theme={ themeColor } onClick={ () => setPopUp( { action: "edit magazine", image: list.magazine[ 0 ]?.avonMagazineImage, imageName: "avonMagazineImage", linkName: "avonMagazineLink", brand: "avon" } ) }>Trocar Revista ?</Button>
-                            </Test>
+                                <Button theme={ themeColor } onClick={ () => setPopUp( { action: "edit magazine", image: list.magazine[ 0 ]?.avonMagazineImageURL, imageName: "avonMagazineImage", linkName: "avonMagazineLink", brand: "avon" } ) }>Trocar Revista ?</Button>
+                            </DivImg>
                         </ImgContainer>
                     </MagazineContainer>
 
@@ -97,13 +97,13 @@ export const Home = () => {
                         <h2>Revista Casa & Estilo :</h2>
 
                         <ImgContainer theme={ themeColor }>
-                            <img src={ `${ url }/images/magazineData/${ list.magazine[ 0 ].casa_estiloMagazineImage }` } alt="" />
+                            <img src={ list.magazine[ 0 ].casa_estiloMagazineImageURL } alt="Casa & Estilo Magazine" />
 
-                            <Test>
+                            <DivImg>
                                 <Link to={ list.magazine[ 0 ].casa_estiloMagazineLink } target="_blank" ><Button theme={ themeColor }>Ver Revista</Button></Link>
 
-                                <Button theme={ themeColor } onClick={ () => setPopUp( { action: "edit magazine", image: list.magazine[ 0 ]?.casa_estiloMagazineImage, imageName: "casa_estiloMagazineImage", linkName: "casa_estiloMagazineLink", brand: "casa&estilo" } ) }>Trocar Revista ?</Button>
-                            </Test>
+                                <Button theme={ themeColor } onClick={ () => setPopUp( { action: "edit magazine", image: list.magazine[ 0 ]?.casa_estiloMagazineImageURL, imageName: "casa_estiloMagazineImage", linkName: "casa_estiloMagazineLink", brand: "casa&estilo" } ) }>Trocar Revista ?</Button>
+                            </DivImg>
                         </ImgContainer>
                     </MagazineContainer>
 
@@ -111,13 +111,13 @@ export const Home = () => {
                         <h2>Revista Natura :</h2>
 
                         <ImgContainer theme={ themeColor }>
-                            <img src={ `${ url }/images/magazineData/${ list.magazine[ 0 ].naturaMagazineImage }` } alt="" />
+                            <img src={ list.magazine[ 0 ].naturaMagazineImageURL } alt="Natura Magazine" />
 
-                            <Test>
+                            <DivImg>
                                 <Link to={ list.magazine[ 0 ].naturaMagazineLink } target="_blank"><Button theme={ themeColor }>Ver Revista</Button></Link>
 
-                                <Button theme={ themeColor } onClick={ () => setPopUp( { action: "edit magazine", image: list.magazine[ 0 ]?.naturaMagazineImage, imageName: "naturaMagazineImage", linkName: "naturaMagazineLink", brand: "natura" } ) }>Trocar Revista ?</Button>
-                            </Test>
+                                <Button theme={ themeColor } onClick={ () => setPopUp( { action: "edit magazine", image: list.magazine[ 0 ]?.naturaMagazineImageURL, imageName: "naturaMagazineImage", linkName: "naturaMagazineLink", brand: "natura" } ) }>Trocar Revista ?</Button>
+                            </DivImg>
                         </ImgContainer>
                     </MagazineContainer>
                 </ImgContainerDiv>

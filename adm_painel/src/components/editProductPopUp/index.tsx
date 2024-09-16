@@ -6,11 +6,11 @@ import arrow_icon from "../../assets/arrow_icon.png";
 import { EditCategoryAndPrice, EditName, EditSelect, EditInput, EditValidityAndQuantity } from "./styles";
 import { ArrowIcon, CurrentImg, EditTitle, EditBackground, EditContainer, ImgContainer, ImgUpload, EditButton } from "../styles/componentStyles";
 
-export const EditProductPopUp = ( { productImage }: { productImage: File } ) => {
+export const EditProductPopUp = ( { productImage }: { productImage: string } ) => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
-    const { themeColor, url, brand, productData, setProductData, setPopUp, updateProduct, onChangeHandler, onChangeValidityInput } = adminContext;
+    const { themeColor, brand, productData, setProductData, setPopUp, updateProduct, onChangeHandler, onChangeValidityInput } = adminContext;
 
     return (
         <EditBackground>
@@ -35,7 +35,7 @@ export const EditProductPopUp = ( { productImage }: { productImage: File } ) => 
                     <div>
                         <p>Imagem atual</p>
 
-                        <CurrentImg src={ `${ url }/images/${ brand }/${ productImage }` } alt="Imagem do produto" />
+                        <CurrentImg src={ productImage } alt="Imagem do produto" />
                     </div>
 
                     <ArrowIcon src={ arrow_icon } alt="Arrow Icon" />

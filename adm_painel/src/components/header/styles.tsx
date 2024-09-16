@@ -5,31 +5,40 @@ export const HeaderContainer = styled.header`
     align-items: center;
     justify-content: space-between;
     height: 9vh;
+    padding: 0 25px;
     border-bottom: 2px solid ${ props => props.theme };
 
     input {
         display: none;
     }
+    
+    @media (max-width: 700px) {
+        height: 8vh;
+    }
+
+    @media (max-width: 400px) {
+        padding: 0 15px;
+    }
 `
 
 export const Logo = styled.img`
-    padding-left: 20px;
     width: 50px;
-    border-radius: 50%;
+
+    @media (max-width: 400px) {
+        width: 40px;
+    }
 `
 
 export const Nav = styled.nav`
+    position: relative;
+    width: 100%;
+
     label {
         display: flex;
         flex-direction: column;
     }
 
-    @media (max-width: 900px) {
-        position: absolute;
-        top: .1vh;
-        right: 0;
-        z-index: 1;
-
+    @media (max-width: 700px) {
         &.toggle ul {
             display: block;
         }
@@ -53,13 +62,14 @@ export const Nav = styled.nav`
 export const Ul = styled.ul`
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 75vw;
-    padding: 0px 20px;
+    justify-content: end;
 
-    @media (max-width: 900px) {
+    @media (max-width: 700px) {
         display: none;
-        width: 290px;
+        text-align: center;
+        position: absolute;
+        top: 70px;
+        right: -15px;
         background-color: aliceblue;
     }
 `
@@ -67,7 +77,11 @@ export const Ul = styled.ul`
 export const Links = styled.li`
     display: flex;
     justify-content: space-between;
-    width: 500px;
+    max-width: 500px;
+    position: absolute;
+    left: 0;
+    right: 100px;
+    margin: 0 auto;
 
     a {
         cursor: pointer;
@@ -85,8 +99,12 @@ export const Links = styled.li`
     }
 
     @media (max-width: 900px) {
+        justify-content: space-evenly;
+    }
+
+    @media (max-width: 700px) {
         display: block;
-        width: 100%;
+        position: sticky;
 
         a {
             text-align: center;
@@ -106,8 +124,8 @@ export const Li = styled.li`
     font-weight: 700;
     cursor: pointer;
     
-    @media (max-width: 900px) {
-        margin: 20px 70px;
+    @media (max-width: 700px) {
+        margin: 25px 70px;
     }
 `
 
@@ -117,7 +135,7 @@ export const Menu = styled.div`
     height: 60px;
     align-self: flex-end;
 
-    @media (max-width: 900px) {
+    @media (max-width: 700px) {
         display: block;
     }
 `
@@ -129,8 +147,9 @@ export const Hamburguer = styled.span`
     width: 30px;
     height: 2px;
     top: 29px;
-    left: 15px;
+    left: 30px;
     transition: 0.5s ease-in-out;
+    z-index: 1;
 
     &:before,
     &:after {

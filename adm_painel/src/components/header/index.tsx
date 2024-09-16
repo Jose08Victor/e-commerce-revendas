@@ -2,11 +2,12 @@ import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AdminContext } from "../../context/adminContext";
 import { HeaderContainer, Logo, Nav, Ul, Links, Li, Hamburguer, Menu } from "./styles";
+import logo_mc from "../../assets/logo_MC.png";
 
 export const Header = () => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
-    
+
     const { themes, themeColor, setThemeColor, brand, setBrand } = adminContext;
 
     const [ isToggle, setIsToggle ] = useState( false );
@@ -14,7 +15,7 @@ export const Header = () => {
     return (
         <HeaderContainer theme={ themeColor }>
             <Link to="/" onClick={ () => { setBrand( "/" ), setIsToggle( false ), setThemeColor( [ themes.defaultColor ] ) } }>
-                <Logo src="https://img.freepik.com/psd-gratuitas/circulo-vermelho_23-2150588573.jpg?semt=sph" alt="Test" />
+                <Logo src={ logo_mc } alt="Logo" />
             </Link>
 
             <Nav className={ isToggle ? "toggle" : "" }>

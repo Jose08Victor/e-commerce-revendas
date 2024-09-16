@@ -9,10 +9,10 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
     const themes: Themes = {
         avonColor: "#E4004B",
         naturaColor: "#FF6916",
-        defaultColor: "#4eb2ff"
+        defaultColor: "#D8B76E"
     };
 
-    const url = "https://marlene-cosmeticos-server.onrender.com";
+    const url = "http://localhost:4000";
 
     const [ themeColor, setThemeColor ] = useState( [themes.defaultColor ] );
 
@@ -61,6 +61,7 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
     const getProductList = async () => {
         try {
             const response = await axios.get( `${ url }/api/${ brand }/productList` );
+            
             if ( !response.data.success ) toast.error( response.data.message );
             else setList( list => ( { ...list, products: response.data.data } ) );
         } catch ( error ) {

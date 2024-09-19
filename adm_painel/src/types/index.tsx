@@ -75,7 +75,7 @@ export interface MagazineData {
 export interface PopUp {
     action: string;
     id?: string;
-    image?: File;
+    image?: string;
     imageName?: string;
     linkName?: string;
     brand?: string;
@@ -86,7 +86,8 @@ export interface List {
     [ {
         _id: string;
         name: string;
-        image: File;
+        imageName: string;
+        imageURL: string;
         price: number;
         category: string;
         quantity: number;
@@ -95,7 +96,8 @@ export interface List {
     kits: [] |
     [ {
         _id: string;
-        image: File;
+        imageName: string;
+        imageURL: string;
         nameOfProducts: string[];
         price: number;
         quantity: number;
@@ -106,11 +108,14 @@ export interface List {
         currentCycle: number;
         startOfCycle: string;
         endOfCycle: string;
-        avonMagazineImage: File;
+        avonMagazineImageName: string;
+        avonMagazineImageURL: string;
         avonMagazineLink: string;
-        casa_estiloMagazineImage: File;
+        casa_estiloMagazineImageName: string;
+        casa_estiloMagazineImageURL: string;
         casa_estiloMagazineLink: string;
-        naturaMagazineImage: File;
+        naturaMagazineImageName: string;
+        naturaMagazineImageURL: string;
         naturaMagazineLink: string;
     } ]
 }

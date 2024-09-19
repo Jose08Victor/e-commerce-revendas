@@ -9,11 +9,11 @@ export const KitList = () => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
-    const { url, brand, themeColor, popUp, setPopUp, setProductName, list, getKitList, setType } = adminContext;
+    const { themeColor, popUp, setPopUp, setProductName, list, getKitList, setType } = adminContext;
 
     useEffect( () => {
         getKitList();
-    }, [getKitList] );
+    }, [ getKitList ] );
 
     return (
         <ListContainer theme={ themeColor }>
@@ -29,10 +29,10 @@ export const KitList = () => {
                 return (
                     <ListTable theme={ themeColor } key={ index }>
                         <KitListTableFormat theme={ themeColor }>
-                            <li><img src={ `${ url }/images/${ brand }/${ product.image }` } alt="Imagem do produto" /></li>
+                            <li><img src={ product.imageURL } alt="Imagem do produto" /></li>
 
                             <li>{ product.nameOfProducts.map( ( name, index ) => {
-                                return <h4 key={ index }>{ name }</h4>
+                                return <h4 key={ index }>- { name }</h4>
                             } ) }</li>
 
                             <li>R$ { product.price }</li>
@@ -55,7 +55,7 @@ export const KitList = () => {
                             </ActionButton>
                         </KitListTableFormat>
 
-                        { popUp?.id === product._id && popUp.action === "edit kit" && <EditKitPopUp productImage={ product.image } /> }
+                        { popUp?.id === product._id && popUp.action === "edit kit" && <EditKitPopUp productImage={ product.imageURL } /> }
                     </ListTable>
                 )
             } ) }

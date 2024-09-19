@@ -9,7 +9,7 @@ export const ProductList = ( { products }: { products: string } ) => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
-    const { url, brand, list, popUp, setPopUp, getProductList, themeColor, setType } = adminContext;
+    const { brand, list, popUp, setPopUp, getProductList, themeColor, setType } = adminContext;
 
     const [ category, setCategory ] = useState( "Perfumes" );
 
@@ -73,7 +73,7 @@ export const ProductList = ( { products }: { products: string } ) => {
                     return (
                         <ListTable theme={ themeColor } key={ index }>
                             <ProductListTableFormat theme={ themeColor }>
-                                <li><img src={ `${ url }/images/${ brand }/${ product.image }` } alt="Imagem do produto" /></li>
+                                <li><img src={ product.imageURL } alt="Imagem do produto" /></li>
 
                                 <li>{ product.name }</li>
 
@@ -98,7 +98,7 @@ export const ProductList = ( { products }: { products: string } ) => {
                                 </ActionButton>
                             </ProductListTableFormat>
 
-                            { popUp?.id === product._id && popUp.action === "edit product" && <EditProductPopUp productImage={ product.image } /> }
+                            { popUp?.id === product._id && popUp.action === "edit product" && <EditProductPopUp productImage={ product.imageURL } /> }
                         </ListTable>
                     )
             } ) }

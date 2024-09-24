@@ -118,12 +118,18 @@ export const Links = styled.li`
 export const Li = styled.li`
     padding: 10px 20px;
     border-radius: 30px;
-    color: white;
+    color: aliceblue;
     background-color: ${ props => props.theme };
     font-size: 17px;
     font-weight: 700;
     cursor: pointer;
     
+    &:hover {
+        color: ${ props => props.theme };
+        background-color: aliceblue;
+        border: 2px solid ${ props => props.theme };
+    }
+
     @media (max-width: 700px) {
         margin: 25px 70px;
     }

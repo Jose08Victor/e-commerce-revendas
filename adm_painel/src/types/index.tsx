@@ -20,6 +20,7 @@ export interface AdminContextProps {
     list: List;
     popUp: PopUp | null;
     setPopUp: React.Dispatch<React.SetStateAction<PopUp | null>>;
+    isSubmitting: boolean;
     getProductList: () => Promise<void>;
     getKitList: () => Promise<void>;
     getMagazineList: () => Promise<void>;
@@ -32,6 +33,10 @@ export interface AdminContextProps {
     removeKit: ( productId: string ) => Promise<void>;
     onChangeHandler: ( event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> ) => void;
     onChangeValidityInput: ( event: React.ChangeEvent<HTMLInputElement> ) => void;
+    handleFileUpload: ( event: React.ChangeEvent<HTMLInputElement> ) => void;
+    handlePaste: ( event: React.ClipboardEvent ) => void;
+    handleDrop: ( event: React.DragEvent ) => void;
+    handleDragOver: ( event: React.DragEvent ) => void;
 }
 
 export interface AdminContextProviderProps {

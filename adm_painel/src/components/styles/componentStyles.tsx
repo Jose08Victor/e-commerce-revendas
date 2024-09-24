@@ -11,52 +11,114 @@ export const FormContainer = styled.form`
 `
 
 export const AddImgUpload = styled.div`
-    width: 180px;
-    height: 180px;
     display: flex;
-    justify-content: center;
+    gap: 22px;
     align-items: center;
     flex-direction: column;
     margin-bottom: 15px;
+    text-align: center;
+    position: relative;
 
-    img {
-        max-width: 180px;
-        max-height: 180px;
-        cursor: pointer;
-        border-radius: 10px;
-    }
-
-    p {
-        font-weight: 500;
+    h2 {
+        font-weight: 600;
         font-size: 17px;
         margin-bottom: 5px;
         cursor: default;
     }
 
+    label {
+        border-radius: 10px;
+        padding: 10px 75px;
+        color: ${ props => props.theme };
+        background-color: aliceblue;
+        border: 2px solid ${ props => props.theme };
+
+        &:hover {      
+            border: 2px solid;
+            color: aliceblue;
+            background-color: ${ props => props.theme };
+            cursor: pointer;
+        }
+    }
+
+    div {
+        max-width: 280px;
+        border: 2px dashed ${ props => props.theme };
+        padding: 20px;
+        color: ${ props => props.theme };
+        background-color: aliceblue;
+        font-weight: 600;
+        border-radius: 10px;
+
+        &:hover {
+            border: 2px solid;
+            color: aliceblue;
+            background-color: ${ props => props.theme };
+            cursor: pointer;
+        }
+    }
+
+    img {
+        max-width: 180px;
+        max-height: 180px;
+        border-radius: 10px;
+    }
+
+    p {
+        cursor: pointer;
+        font-weight: 700;
+        transition: ease-in-out .3s;
+        position: absolute;
+        right: -15px;
+        top: -15px;
+
+        &:hover {
+            color: ${ props => props.theme };
+            transform: scale(1.4);
+        }
+    }
+
     @media (max-width: 740px) {
-        margin-bottom: 0px;
+        h2 {
+            font-size: 15px;
+        }
+
+        label {
+            padding: 8px 65px;
+            font-size: 14px;
+        }
+
+        div {
+            max-width: 240px;
+            font-size: 14px;
+            padding: 18px;
+        }    
 
         img {
             max-width: 140px;
             max-height: 140px;
-        }
-
-        p {
-            font-size: 14px;
-        }
+        }      
     }
 
     @media (max-width: 375px) {
-        width: 120px;
-        height: 120px;
+        h2 {
+            font-size: 13px;
+        }
+
+        label {
+            padding: 8px 55px;
+            font-size: 11px;
+        }
+
+        div {
+            max-width: 200px;
+            font-size: 11px;
+            padding: 18px;
+        }
 
         img {
             max-width: 120px;
             max-height: 120px;
-        }
-
-        p {
-            font-size: 12px;
         }
     }
 `
@@ -109,6 +171,14 @@ export const AddButton = styled.button`
         background-color: aliceblue;
         border: 2px solid ${ props => props.theme };
         cursor: pointer;
+    }
+    
+    &:disabled:hover {
+            color: aliceblue;
+            background-color: ${ props => props.theme };
+            border: 2px solid;
+            cursor: default;
+            opacity: .5;
     }
 
     @media (max-width: 500px) {
@@ -213,11 +283,16 @@ export const InputName = styled( Input )`
 export const CurrentImg = styled.img`
     width: 150px;
     height: 150px;
-    border-radius: 20px;
+    border-radius: 10px;
 
-    @media (max-width: 500px) {
+    @media (max-width: 740px) {
         width: 90px;
         height: 90px;
+    }
+
+    @media (max-width: 375px) {
+        width: 70px;
+        height: 70px;
     }
 `
 
@@ -357,6 +432,14 @@ export const EditButton = styled.button`
         cursor: pointer;
     }
 
+    &:disabled:hover {
+            color: aliceblue;
+            background-color: ${ props => props.theme };
+            border: 2px solid;
+            cursor: default;
+            opacity: .5;
+    }
+
     @media (max-width: 740px) {
         width: 120px;
         font-size: 15px;
@@ -433,7 +516,6 @@ export const NameList = styled.ul`
         }
 
         p {
-            border: 1px solid transparent;
             cursor: pointer;
             font-size: 22px;
             transition: ease-in-out .3s;

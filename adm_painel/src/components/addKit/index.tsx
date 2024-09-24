@@ -1,5 +1,3 @@
-import pink_cloud_upload from "../../assets/pink_cloud_upload.svg";
-import orange_cloud_upload from "../../assets/orange_cloud_upload.svg";
 import { useContext, useRef } from "react";
 import { AdminContext } from "../../context/adminContext";
 import { AddKitFields, AddPriceAndQuantity1 } from "./styles";
@@ -9,7 +7,7 @@ export const AddKit = () => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
-    const { brand, setType, themeColor, kitData, setKitData, productName, setProductName, addKit } = adminContext;
+    const { setType, themeColor, kitData, setKitData, productName, setProductName, addKit, handleFileUpload, handlePaste, handleDrop, handleDragOver, isSubmitting } = adminContext;
 
     const text = useRef<HTMLInputElement | null>( null );
 
@@ -17,14 +15,24 @@ export const AddKit = () => {
 
     return (
         <FormContainer onSubmit={ addKit }>
-            <AddImgUpload>
-                <p>Escolha uma imagem</p>
+            <AddImgUpload theme={ themeColor }>
+                { !kitData.image && <>
+                    <h2>Envie uma imagem</h2>
 
-                <label htmlFor="image">
-                    <img src={ kitData.image ? URL.createObjectURL( kitData.image ) : brand === "avon" ? pink_cloud_upload : orange_cloud_upload } alt="Upload Area Image" />
-                </label>
+                    <label htmlFor="image">Escolher arquivo</label>
 
-                <input onChange={ ( e ) => setKitData( kitData => ( { ...kitData, [ e.target.name ]: e.target.files ? e.target.files[ 0 ] : null } ) ) } type="file" id="image" name="image" hidden required />
+                    <input type="file" accept="image/*" id='image' hidden onChange={ handleFileUpload } />
+
+                    <div onPaste={ handlePaste } onDrop={ handleDrop } onDragOver={ handleDragOver }>
+                        Arraste e solte a imagem aqui, ou clique e cole (Ctrl + V)
+                    </div>
+                </> }
+
+                { kitData.image && <>
+                    <img src={ URL.createObjectURL( kitData.image ) } alt="Uploaded" />
+
+                    <p onClick={ () => setKitData( kitData => ( { ...kitData, "image": null } ) ) }>X</p>
+                </> }
             </AddImgUpload>
 
             <InputFields>
@@ -74,7 +82,9 @@ export const AddKit = () => {
                 </AddKitFields>
 
                 <Buttons>
-                    <AddButton theme={ themeColor } onClick={ () => setKitData( kitData => ( { ...kitData, [ "nameOfProducts" ]: productName } ) ) }>Confirmar</AddButton>
+                    <AddButton theme={ themeColor } onClick={ () => setKitData( kitData => ( { ...kitData, [ "nameOfProducts" ]: productName } ) ) } disabled={ isSubmitting }>
+                        { isSubmitting ? 'Enviando...' : 'Confirmar' }
+                    </AddButton>
 
                     <ChangeButton theme={ themeColor } onClick={ () => setType( "Produto" ) }>Adicionar Produto ?</ChangeButton>
                 </Buttons>

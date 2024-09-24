@@ -1,22 +1,14 @@
 import { useContext } from "react";
 import { AdminContext } from "../../context/adminContext";
-import orange_cloud_upload from "../../assets/orange_cloud_upload.svg";
-import pink_cloud_upload from "../../assets/pink_cloud_upload.svg";
 import arrow_icon from "../../assets/arrow_icon.png";
-import { EditName, EditInput } from "../editProductPopUp/styles";
+import { EditImgUpload, EditName, EditInput } from "../editProductPopUp/styles";
 import { ArrowIcon, CurrentImg, EditTitle, EditBackground, EditContainer, ImgContainer, ImgUpload, EditButton } from "../styles/componentStyles";
 
 export const EditMagazinePopUp = () => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
-    const { themeColor, magazineData, setMagazineData, setPopUp, updateMagazineData, onChangeHandler, popUp } = adminContext;
-
-    const onImageHandler = () => {
-        if ( popUp?.imageName === "avonMagazineImage" ) return magazineData.avonMagazineImage ? URL.createObjectURL( magazineData.avonMagazineImage ) : pink_cloud_upload;
-        if ( popUp?.imageName === "casa_estiloMagazineImage" ) return magazineData.casa_estiloMagazineImage ? URL.createObjectURL( magazineData.casa_estiloMagazineImage ) : pink_cloud_upload;
-        if ( popUp?.imageName === "naturaMagazineImage" ) return magazineData.naturaMagazineImage ? URL.createObjectURL( magazineData.naturaMagazineImage ) : orange_cloud_upload;
-    }
+    const { themeColor, magazineData, setMagazineData, setPopUp, updateMagazineData, onChangeHandler, popUp, handleFileUpload, handleDrop, handlePaste, handleDragOver, isSubmitting } = adminContext;
 
     const onValueHandler = () => {
         if ( popUp?.linkName === "avonMagazineLink" ) return magazineData.avonMagazineLink;
@@ -55,25 +47,48 @@ export const EditMagazinePopUp = () => {
 
                     <ArrowIcon src={ arrow_icon } alt="Arrow Icon" />
 
-                    <div>
-                        <p>Trocar imagem ?</p>
+                    <EditImgUpload theme={ themeColor }>
+                        { !magazineData.avonMagazineImage && !magazineData.casa_estiloMagazineImage && !magazineData.naturaMagazineImage && <>
+                            <h2>Trocar imagem ?</h2>
 
-                        <label htmlFor="image">
-                            <ImgUpload src={ onImageHandler() } alt="Upload Area Image" />
-                        </label>
+                            <label htmlFor="image">Escolher arquivo</label>
 
-                        <input onChange={ ( e ) => setMagazineData( magazineData => ( { ...magazineData, [ e.target.name ]: e.target.files ? e.target.files[ 0 ] : null } ) ) } type="file" id="image" name={ popUp?.imageName } hidden />
-                    </div>
+                            <input type="file" accept="image/*" id='image' hidden onChange={ handleFileUpload } />
+
+                            <div onPaste={ handlePaste } onDrop={ handleDrop } onDragOver={ handleDragOver }>
+                                Arraste e solte a imagem aqui, ou clique e cole (Ctrl + V)
+                            </div>
+                        </> }
+
+                        { magazineData.avonMagazineImage && <>
+                            <ImgUpload src={ URL.createObjectURL( magazineData.avonMagazineImage ) } alt="Uploaded" />
+
+                            <p onClick={ () => setMagazineData( magazineData => ( { ...magazineData, "avonMagazineImage": null } ) ) }>X</p>
+                        </> }
+
+                        { magazineData.casa_estiloMagazineImage && <>
+                            <ImgUpload src={ URL.createObjectURL( magazineData.casa_estiloMagazineImage ) } alt="Uploaded" />
+
+                            <p onClick={ () => setMagazineData( magazineData => ( { ...magazineData, "casa_estiloMagazineImage": null } ) ) }>X</p>
+                        </> }
+
+                        { magazineData.naturaMagazineImage && <>
+                            <ImgUpload src={ URL.createObjectURL( magazineData.naturaMagazineImage ) } alt="Uploaded" />
+
+                            <p onClick={ () => setMagazineData( magazineData => ( { ...magazineData, "naturaMagazineImage": null } ) ) }>X</p>
+                        </> }
+                    </EditImgUpload>
                 </ImgContainer>
 
                 <EditName>
-                    <p onClick={ () => console.log( magazineData )
-                    }>Editar Link ?</p>
+                    <p>Editar Link ?</p>
 
                     <EditInput theme={ themeColor } value={ onValueHandler() } onChange={ onChangeHandler } type="text" name={ popUp?.linkName } placeholder="Digite aqui..." />
                 </EditName>
 
-                <EditButton theme={ themeColor } type="submit">Confirmar</EditButton>
+                <EditButton theme={ themeColor } disabled={ isSubmitting } type="submit">
+                    { isSubmitting ? 'Enviando...' : 'Confirmar' }
+                </EditButton>
             </EditContainer>
         </EditBackground>
     )

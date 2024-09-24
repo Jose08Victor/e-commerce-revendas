@@ -1,16 +1,14 @@
 import { useContext } from "react";
 import { AdminContext } from "../../context/adminContext";
-import pink_cloud_upload from "../../assets/pink_cloud_upload.svg";
-import orange_cloud_upload from "../../assets/orange_cloud_upload.svg";
 import arrow_icon from "../../assets/arrow_icon.png";
-import { EditCategoryAndPrice, EditName, EditSelect, EditInput, EditValidityAndQuantity } from "./styles";
+import { EditCategoryAndPrice, EditName, EditSelect, EditInput, EditValidityAndQuantity, EditImgUpload } from "./styles";
 import { ArrowIcon, CurrentImg, EditTitle, EditBackground, EditContainer, ImgContainer, ImgUpload, EditButton } from "../styles/componentStyles";
 
 export const EditProductPopUp = ( { productImage }: { productImage: string } ) => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
-    const { themeColor, brand, productData, setProductData, setPopUp, updateProduct, onChangeHandler, onChangeValidityInput } = adminContext;
+    const { themeColor, brand, productData, setProductData, setPopUp, updateProduct, onChangeHandler, onChangeValidityInput, handleFileUpload, handlePaste, handleDrop, handleDragOver, isSubmitting } = adminContext;
 
     return (
         <EditBackground>
@@ -40,15 +38,25 @@ export const EditProductPopUp = ( { productImage }: { productImage: string } ) =
 
                     <ArrowIcon src={ arrow_icon } alt="Arrow Icon" />
 
-                    <div>
-                        <p>Trocar imagem ?</p>
+                    <EditImgUpload theme={themeColor}>
+                        { !productData.image && <>
+                            <h2>Trocar imagem?</h2>
 
-                        <label htmlFor="image">
-                            <ImgUpload src={ productData.image ? URL.createObjectURL( productData.image ) : brand === "avon" ? pink_cloud_upload : orange_cloud_upload } alt="Upload Area Image" />
-                        </label>
+                            <label htmlFor="image">Escolher arquivo</label>
 
-                        <input onChange={ ( e ) => setProductData( productData => ( { ...productData, [ e.target.name ]: e.target.files ? e.target.files[ 0 ] : null } ) ) } type="file" id="image" name="image" hidden />
-                    </div>
+                            <input type="file" accept="image/*" id='image' hidden onChange={ handleFileUpload } />
+
+                            <div onPaste={ handlePaste } onDrop={ handleDrop } onDragOver={ handleDragOver }>
+                                Arraste e solte a imagem aqui, ou clique e cole (Ctrl + V)
+                            </div>
+                        </> }
+
+                        { productData.image && <>
+                            <ImgUpload src={ URL.createObjectURL( productData.image ) } alt="Uploaded" />
+
+                            <p onClick={ () => setProductData( productData => ( { ...productData, "image": null } ) ) }>X</p>
+                        </> }
+                    </EditImgUpload>
                 </ImgContainer>
 
                 <EditName>
@@ -104,7 +112,9 @@ export const EditProductPopUp = ( { productImage }: { productImage: string } ) =
                     </div>
                 </EditValidityAndQuantity>
 
-                <EditButton theme={ themeColor } type="submit">Confirmar</EditButton>
+                <EditButton theme={ themeColor } type="submit" disabled={isSubmitting}>
+                { isSubmitting ? 'Enviando...' : 'Confirmar' }
+                </EditButton>
             </EditContainer>
         </EditBackground>
     )

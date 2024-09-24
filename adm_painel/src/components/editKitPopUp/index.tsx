@@ -1,16 +1,14 @@
 import { useContext, useRef } from "react";
 import { AdminContext } from "../../context/adminContext";
-import pink_cloud_upload from "../../assets/pink_cloud_upload.svg";
-import orange_cloud_upload from "../../assets/orange_cloud_upload.svg";
 import arrow_icon from "../../assets/arrow_icon.png";
 import { ArrowIcon, CurrentImg, EditBackground, EditContainer, ImgContainer, ImgUpload, Input, InputName, EditButton, Label, AddPriceAndQuantity } from "../styles/componentStyles";
-import { EditKitTitle, KitNameList } from "./styles";
+import { EditKitTitle, KitNameList, EditKitImgUpload } from "./styles";
 
 export const EditKitPopUp = ( { productImage }: { productImage: string } ) => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
-    const { themeColor, brand, kitData, setKitData, productName, setProductName, setPopUp, updateKit, onChangeHandler } = adminContext;
+    const { themeColor, kitData, setKitData, productName, setProductName, setPopUp, updateKit, onChangeHandler, handleFileUpload, handlePaste, handleDrop, handleDragOver, isSubmitting } = adminContext;
 
     const text = useRef<HTMLInputElement | null>( null );
 
@@ -41,15 +39,25 @@ export const EditKitPopUp = ( { productImage }: { productImage: string } ) => {
 
                     <ArrowIcon src={ arrow_icon } alt="Arrow Icon" />
 
-                    <div>
-                        <p>Trocar imagem ?</p>
+                    <EditKitImgUpload theme={themeColor}>
+                        { !kitData.image && <>
+                            <h2>Trocar imagem?</h2>
 
-                        <label htmlFor="image">
-                            <ImgUpload src={ kitData.image ? URL.createObjectURL( kitData.image ) : brand === "avon" ? pink_cloud_upload : orange_cloud_upload } alt="Upload Area Image" />
-                        </label>
+                            <label htmlFor="image">Escolher arquivo</label>
 
-                        <input onChange={ ( e ) => setKitData( kitData => ( { ...kitData, [ e.target.name ]: e.target.files ? e.target.files[ 0 ] : null } ) ) } type="file" id="image" name="image" hidden />
-                    </div>
+                            <input type="file" accept="image/*" id='image' hidden onChange={ handleFileUpload } />
+
+                            <div onPaste={ handlePaste } onDrop={ handleDrop } onDragOver={ handleDragOver }>
+                                Arraste e solte a imagem aqui, ou clique e cole (Ctrl + V)
+                            </div>
+                        </> }
+
+                        { kitData.image && <>
+                            <ImgUpload src={ URL.createObjectURL( kitData.image ) } alt="Uploaded" />
+
+                            <p onClick={ () => setKitData( kitData => ( { ...kitData, "image": null } ) ) }>X</p>
+                        </> }
+                    </EditKitImgUpload>
                 </ImgContainer>
 
                 <ul>
@@ -95,7 +103,9 @@ export const EditKitPopUp = ( { productImage }: { productImage: string } ) => {
                     </div>
                 </AddPriceAndQuantity>
 
-                <EditButton theme={ themeColor } onClick={ () => setKitData( kitData => ( { ...kitData, [ "nameOfProducts" ]: productName } ) ) } type="submit">Confirmar</EditButton>
+                <EditButton theme={ themeColor } onClick={ () => setKitData( kitData => ( { ...kitData, [ "nameOfProducts" ]: productName } ) ) } type="submit" disabled={isSubmitting}>
+                { isSubmitting ? 'Enviando...' : 'Confirmar' }
+                </EditButton>
             </EditContainer>
         </EditBackground>
     )

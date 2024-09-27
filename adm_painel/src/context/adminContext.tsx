@@ -9,12 +9,12 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
     const themes: Themes = {
         avonColor: "#E4004B",
         naturaColor: "#FF6916",
-        defaultColor: "#D8B76E"
+        defaultColor: "#efba48"
     };
 
     const url = "https://marlene-cosmeticos-server.onrender.com";
 
-    const [ themeColor, setThemeColor ] = useState( [themes.defaultColor ] );
+    const [ themeColor, setThemeColor ] = useState( [ themes.defaultColor ] );
 
     const [ brand, setBrand ] = useState<string>( "/" );
 
@@ -23,6 +23,8 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
     const [ productName, setProductName ] = useState<string[] | []>( [] );
 
     const [ popUp, setPopUp ] = useState<PopUp | null>( null );
+
+    const [ isSubmitting, setIsSubmitting ] = useState<boolean>( false );
 
     const [ list, setList ] = useState<List>( {
         products: [],
@@ -61,7 +63,7 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
     const getProductList = async () => {
         try {
             const response = await axios.get( `${ url }/api/${ brand }/productList` );
-            
+
             if ( !response.data.success ) toast.error( response.data.message );
             else setList( list => ( { ...list, products: response.data.data } ) );
         } catch ( error ) {
@@ -90,9 +92,10 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
             console.log( error );
             toast.error( "Falha ao conectar com o servidor" );
         }
-    }
+    };
 
     const addProduct = async ( event: { preventDefault: () => void; } ) => {
+        setIsSubmitting(true);
         try {
             event.preventDefault();
             const formData = new FormData();
@@ -115,6 +118,7 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
                 quantity: "",
                 validity: ""
             } );
+            setIsSubmitting(false);
         } catch ( error ) {
             console.log( error );
             toast.error( "Falha ao conectar com o servidor" );
@@ -122,6 +126,7 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
     };
 
     const addKit = async ( event: { preventDefault: () => void; } ) => {
+        setIsSubmitting(true);
         try {
             event.preventDefault();
             const formData = new FormData();
@@ -141,6 +146,7 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
                 quantity: ""
             } );
             setProductName( [] );
+            setIsSubmitting(false);
         } catch ( error ) {
             console.log( error );
             toast.error( "Falha ao conectar com o servidor" );
@@ -148,6 +154,7 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
     };
 
     const updateProduct = async ( event: { preventDefault: () => void; } ) => {
+        setIsSubmitting(true);
         try {
             event.preventDefault();
             const formData = new FormData();
@@ -164,6 +171,7 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
 
             getProductList();
             setPopUp( null );
+            setIsSubmitting(false);
             setProductData( {
                 name: "",
                 image: null,
@@ -179,6 +187,7 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
     };
 
     const updateKit = async ( event: { preventDefault: () => void; } ) => {
+        setIsSubmitting(true);
         try {
             event.preventDefault();
             const formData = new FormData();
@@ -194,6 +203,7 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
             getKitList();
             setPopUp( null );
             setProductName( [] );
+            setIsSubmitting(false);
             setKitData( {
                 image: null,
                 nameOfProducts: [ "" ],
@@ -207,6 +217,8 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
     };
 
     const updateMagazineData = async ( event: { preventDefault: () => void; } ) => {
+        setIsSubmitting(true);
+
         try {
             event.preventDefault();
             const formData = new FormData();
@@ -221,13 +233,13 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
             if ( magazineData.naturaMagazineLink ) formData.append( "naturaMagazineLink", magazineData.naturaMagazineLink );
             if ( popUp?.brand ) formData.append( "magazine", popUp?.brand );
 
-
             const response = await axios.put( `${ url }/api/magazineData/update/66aec43fe9cad453353d4ec4`, formData );
             if ( !response.data.success ) toast.error( response.data.message );
             else toast.success( response.data.message );
 
             getMagazineList();
             setPopUp( null );
+            setIsSubmitting(false);
             setMagazineData( {
                 currentCycle: "",
                 startOfCycle: "",
@@ -291,7 +303,50 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
         type === "Produto" && setProductData( productData => ( { ...productData, [ event.target.name ]: formattedValue } ) );
     };
 
-    const contextValue = { url, themes, themeColor, setThemeColor, brand, setBrand, type, setType, productData, setProductData, magazineData, setMagazineData, list, popUp, setPopUp, getProductList, getKitList, getMagazineList, addProduct, updateProduct, updateKit, updateMagazineData, removeProduct, removeKit, kitData, setKitData, productName, setProductName, addKit, onChangeHandler, onChangeValidityInput };
+    const handleFileUpload = ( event: React.ChangeEvent<HTMLInputElement> ) => {
+        const selectedFile = event.target.files?.[ 0 ];
+        if ( selectedFile && popUp?.brand === "avon" ) return setMagazineData( magazineData => ( { ...magazineData, "avonMagazineImage": selectedFile } ) );
+        if ( selectedFile && popUp?.brand === "casa&estilo" ) return setMagazineData( magazineData => ( { ...magazineData, "casa_estiloMagazineImage": selectedFile } ) );
+        if ( selectedFile && popUp?.brand === "natura" ) return setMagazineData( magazineData => ( { ...magazineData, "naturaMagazineImage": selectedFile } ) );
+
+        if ( selectedFile && type === "Produto" ) return setProductData( productData => ( { ...productData, "image": selectedFile } ) );
+        if ( selectedFile && type === "Kit" ) return setKitData( kitData => ( { ...kitData, "image": selectedFile } ) );
+    };
+
+    const handlePaste = ( event: React.ClipboardEvent ) => {
+        const items = event.clipboardData.items;
+        for ( let i = 0; i < items.length; i++ ) {
+            if ( items[ i ].type.indexOf( 'image' ) !== -1 ) {
+                const blob = items[ i ].getAsFile();
+
+                if ( blob && popUp?.brand === "avon" ) return setMagazineData( magazineData => ( { ...magazineData, "avonMagazineImage": blob } ) );
+                if ( blob && popUp?.brand === "casa&estilo" ) return setMagazineData( magazineData => ( { ...magazineData, "casa_estiloMagazineImage": blob } ) );
+                if ( blob && popUp?.brand === "natura" ) return setMagazineData( magazineData => ( { ...magazineData, "naturaMagazineImage": blob } ) );
+
+                if ( blob && type === "Produto" ) return setProductData( productData => ( { ...productData, "image": blob } ) );
+                if ( blob && type === "Kit" ) return setKitData( kitData => ( { ...kitData, "image": blob } ) );
+            }
+        }
+    };
+
+    const handleDrop = ( event: React.DragEvent ) => {
+        event.preventDefault();
+        if ( event.dataTransfer.files && event.dataTransfer.files.length > 0 ) {
+            const droppedFile = event.dataTransfer.files[ 0 ];
+            event.dataTransfer.clearData();
+
+            if ( popUp?.brand === "avon" ) return setMagazineData( magazineData => ( { ...magazineData, "avonMagazineImage": droppedFile } ) );
+            if ( popUp?.brand === "casa&estilo" ) return setMagazineData( magazineData => ( { ...magazineData, "casa_estiloMagazineImage": droppedFile } ) );
+            if ( popUp?.brand === "natura" ) return setMagazineData( magazineData => ( { ...magazineData, "naturaMagazineImage": droppedFile } ) );
+
+            if ( type === "Produto" ) return setProductData( productData => ( { ...productData, "image": droppedFile } ) );
+            if ( type === "Kit" ) return setKitData( kitData => ( { ...kitData, "image": droppedFile } ) );
+        }
+    };
+
+    const handleDragOver = ( event: React.DragEvent ) => event.preventDefault();
+
+    const contextValue = { url, themes, themeColor, setThemeColor, brand, setBrand, type, setType, productData, setProductData, magazineData, setMagazineData, list, popUp, setPopUp, getProductList, getKitList, getMagazineList, addProduct, updateProduct, updateKit, updateMagazineData, removeProduct, removeKit, kitData, setKitData, productName, setProductName, addKit, onChangeHandler, onChangeValidityInput, handleFileUpload, handlePaste, handleDrop, handleDragOver, isSubmitting };
 
     return (
         <AdminContext.Provider value={ contextValue }>

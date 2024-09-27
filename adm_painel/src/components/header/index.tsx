@@ -1,16 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AdminContext } from "../../context/adminContext";
 import { HeaderContainer, Logo, Nav, Ul, Links, Li, Hamburguer, Menu } from "./styles";
 import logo_mc from "../../assets/logo_MC.png";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebaseConfig";
 
 export const Header = () => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
     const { themes, themeColor, setThemeColor, brand, setBrand } = adminContext;
-
     const [ isToggle, setIsToggle ] = useState( false );
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+          await signOut(auth);
+          navigate("/login");
+        } catch (error) {
+          console.error("Erro ao fazer logout:", error);
+        }
+      };
 
     return (
         <HeaderContainer theme={ themeColor }>
@@ -38,7 +49,7 @@ export const Header = () => {
                             Produtos Natura</Link>
                     </Links>
 
-                    <Li theme={ themeColor }>Log out</Li>
+                    <Li onClick={handleLogout} theme={ themeColor }>Log out</Li>
                 </Ul>
             </Nav>
         </HeaderContainer>

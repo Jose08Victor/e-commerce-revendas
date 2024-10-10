@@ -9,7 +9,7 @@ export const GlobalStyle = createGlobalStyle`
 
     body {
         min-height: 100vh;
-        background-color: rgb(228, 0, 75, .3);
+        background-color: ${ ( { theme } ) => theme.backgroundColor };
         font-family: "Nunito", sans-serif;
     }
 

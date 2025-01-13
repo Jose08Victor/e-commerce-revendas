@@ -17,7 +17,7 @@ export const AddProduct = () => {
 
           <label htmlFor="image">Escolher arquivo</label>
 
-          <input type="file" accept="image/*" id='image' hidden onChange={ handleFileUpload } />
+          <input type="file" accept="image/*" id='image' hidden onChange={ handleFileUpload } required />
 
           <div onPaste={ handlePaste } onDrop={ handleDrop } onDragOver={ handleDragOver }>
             Arraste e solte a imagem aqui, ou clique e cole (Ctrl + V)

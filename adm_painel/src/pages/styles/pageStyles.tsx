@@ -43,16 +43,16 @@ export const ListTableFormat = styled.ul`
 
 export const ListTable = styled.div`
     ul img {
-        width: 68px;
-        max-height: 68px;
+        width: 72px;
+        max-height: 72px;
         border: 1px solid ${ props => props.theme };
         border-radius: 15px;
     }
         
     @media (max-width: 500px) {
         ul img {
-            width: 47px;
-            max-height: 47px;
+            width: 50px;
+            max-height: 50px;
         }
     }
 `

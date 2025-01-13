@@ -10,11 +10,11 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
     const themes = {
         avonColor: {
             color: "#E4004B",
-            backgroundColor: "rgba(228, 0, 75, .25)"
+            backgroundColor: "rgba(228, 0, 75, .3)"
         },
         naturaColor: {
-            color: "#FF6916",
-            backgroundColor: "rgba(255, 105, 22, .25)",
+            color: "#ff5900",
+            backgroundColor: "rgba(255, 105, 22, .45)",
         }
     };
 

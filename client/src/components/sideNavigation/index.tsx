@@ -2,7 +2,8 @@ import { useContext } from "react";
 import avonIcon from "../../assets/avonIcon.png";
 import naturaIcon from "../../assets/naturaIcon.png";
 import { AdminContext } from "../../context/adminContext";
-import { Nav, Form, Input, Button, Div, ImgContainer, Ul, LoginContainer } from "./styles";
+import { Nav, Form, Input, Div, ImgContainer, Ul, LoginContainer } from "./styles";
+import { MagnifyingGlassSVG } from "../svgContainer";
 
 export const SideNavigation = () => {
     const adminContext = useContext( AdminContext );
@@ -15,7 +16,7 @@ export const SideNavigation = () => {
             <Div>
                 <Form>
                     <Input type="text" placeholder="buscar produto ..." />
-                    <Button type="button" />
+                    <MagnifyingGlassSVG />
                 </Form>
 
                 <p onClick={() => setIsNav(false)}>x</p>

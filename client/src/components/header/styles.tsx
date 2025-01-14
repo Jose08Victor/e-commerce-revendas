@@ -3,12 +3,18 @@ import styled from "styled-components";
 export const HeaderContainer = styled.header`
     position: sticky;
     z-index: 1;
-    background-color: aliceblue;
+    background-color: #fff;
     width: 100%;
     top: 0;
     border-end-end-radius: 30px;
     border-end-start-radius: 30px;
     padding-bottom: 8px;
+    border-bottom: 1px ${ ( { theme } ) => theme.backgroundColor } solid;
+
+    @media (max-width: 500px) {
+        border-end-end-radius: 20px;
+        border-end-start-radius: 20px;
+    }
 `
 
 export const Nav = styled.nav`
@@ -66,30 +72,12 @@ export const Input = styled.input`
     width: 100%;
     height: 30px;
     border-radius: 10px;
-    border: 1px solid black;
+    border: 1px solid ${ ( { theme } ) => theme.color };
     padding: 0px 40px 0px 12px;
-`
+    font-family: nunito;
 
-export const Button = styled.input`
-    background: url("./src/assets/magnifying-glass.svg") no-repeat center ;
-    background-size: 20px;
-    width: 35px;
-    height: 35px;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-    left: 94%;
-
-    &:hover {
-        transform: scale(1.2);
-    }
-
-    ${ HeaderContainer }:hover & {
-        background-color: cyan;
-    }
-
-    @media (max-width: 1024px) {
-        left: 90%;
+    &:focus {
+        outline: 1px solid ${ ( { theme } ) => theme.color };
     }
 `
 
@@ -99,27 +87,19 @@ export const SVGContainer = styled.div`
     gap: 18px;
 `
 
-export const BagSVG = styled.svg`
-    width: 28px;
-    fill: ${ ( { theme } ) => theme.color };
-
-    @media (max-width: 500px) {
-        width: 20px;
-    }
-`
-
 export const Span = styled.span`
     text-align: center;
     line-height: 18px;
     width: 17px;
     height: 17px;
-    background-color: black;
-    color: #ffffff;
+    background-color: #444;
+    color: #fff;
     border-radius: 50%;
     font-size: 13px;
     position: absolute;
     top: 18px;
     right: 45px;
+    cursor: default;
 
     @media (max-width: 500px) {
         top: 20px;
@@ -128,15 +108,6 @@ export const Span = styled.span`
         width: 14px;
         height: 14px;
         font-size: 11px;
-    }
-`
-
-export const ProfileSVG = styled.svg`
-    width: 25px;
-    fill: ${ ( { theme } ) => theme.color };
-
-    @media (max-width: 500px) {
-        width: 18px;
     }
 `
 
@@ -193,14 +164,14 @@ export const CategoryField = styled.ul`
         border: 2px solid;
         padding: 4px 12px;
         letter-spacing: 2px;
-        color: aliceblue;
+        color: #fff;
         background-color: ${ ( { theme } ) => theme.color };
         white-space: nowrap;
         font-weight: 600;
 
         &:hover {
             color: ${ ( { theme } ) => theme.color };
-            background-color: aliceblue;
+            background-color: #fff;
             border: 2px solid ${ ( { theme } ) => theme.color };
             cursor: pointer;
         }

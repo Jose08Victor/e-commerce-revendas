@@ -5,7 +5,7 @@ export const Nav = styled.nav`
     top: 0;
     height: 100vh;
     width: 100%;
-    background-color: aliceblue;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -22,6 +22,13 @@ export const Div = styled.div`
         font-size: 34px;
         font-weight: 700;
         margin-bottom: 7px;
+        cursor: pointer;
+        transition: .3s ease-in-out; 
+
+        &:hover {
+            transform: scale(1.2);
+            color: ${ ( { theme } ) => theme.color };
+        }
     }
 `
 
@@ -41,21 +48,6 @@ export const Input = styled.input`
 
     &:focus {
         outline: 1px solid  ${ ( { theme } ) => theme.color };
-    }
-`
-
-export const Button = styled.input`
-    background: url("./src/assets/magnifying-glass.svg") no-repeat center ;
-    background-size: 20px;
-    width: 35px;
-    height: 35px;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-    left: 90%;
-
-    &:hover {
-        transform: scale(1.2);
     }
 `
 
@@ -85,10 +77,16 @@ export const Ul = styled.ul`
     li {
         font-size: 20px;
         padding: 10px 15px;
-        border-bottom: 1px solid  ${ ( { theme } ) => theme.backgroundColor };
+        border-bottom: 1px solid ${ ( { theme } ) => theme.backgroundColor };
         display: flex;
         align-items: center;
         justify-content: space-between;
+        transition: .3s ease-in-out;
+        
+        &:hover {
+            background-color: ${ ( { theme } ) => theme.color };
+            color: #fff;
+        }
 
         &:after {
             content: '';
@@ -113,12 +111,12 @@ export const LoginContainer = styled.div`
         border-radius: 15px;
         border: 2px solid;
         padding: 14px;
-        color: aliceblue;
+        color: #fff;
         background-color:  ${ ( { theme } ) => theme.color };
 
         &:hover {
             color:  ${ ( { theme } ) => theme.color };
-            background-color: aliceblue;
+            background-color: #fff;
             border: 2px solid  ${ ( { theme } ) => theme.color };
             cursor: pointer;
         }

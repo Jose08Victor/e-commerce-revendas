@@ -2,6 +2,7 @@ import { createContext, useState } from "react";
 import { AdminContextProps, AdminContextProviderProps, Themes, ProductData, PopUp, KitData, List, MagazineData } from "../types";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { auth } from "../firebaseConfig";
 
 export const AdminContext = createContext<AdminContextProps | null>( null );
 
@@ -95,9 +96,17 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
     };
 
     const addProduct = async ( event: { preventDefault: () => void; } ) => {
-        setIsSubmitting(true);
+        event.preventDefault();
+        setIsSubmitting( true );
+
         try {
-            event.preventDefault();
+            const user = auth.currentUser;
+            if ( !user ) {
+                toast.error( "Você precisa estar autenticado para adicionar um produto." );
+                setIsSubmitting( false );
+                return;
+            }
+
             const formData = new FormData();
             formData.append( "name", productData.name );
             formData.append( "price", productData.price );
@@ -107,26 +116,29 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
             if ( productData.image ) formData.append( "image", productData.image );
 
             const response = await axios.post( `${ url }/api/${ brand }/addProduct`, formData );
-            if ( !response.data.success ) toast.error( response.data.message );
-            else toast.success( response.data.message );
+            setIsSubmitting( false );
 
-            setProductData( {
-                name: "",
-                image: null,
-                price: "",
-                category: "",
-                quantity: "",
-                validity: ""
-            } );
-            setIsSubmitting(false);
+            if ( !response.data.success ) toast.error( response.data.message );
+            else {
+                toast.success( response.data.message );
+                setProductData( {
+                    name: "",
+                    image: null,
+                    price: "",
+                    category: "",
+                    quantity: "",
+                    validity: ""
+                } );
+            }
         } catch ( error ) {
             console.log( error );
-            toast.error( "Falha ao conectar com o servidor" );
+            setIsSubmitting( false );
+            toast.error( "Falha ao conectar com o servidor." );
         }
     };
 
     const addKit = async ( event: { preventDefault: () => void; } ) => {
-        setIsSubmitting(true);
+        setIsSubmitting( true );
         try {
             event.preventDefault();
             const formData = new FormData();
@@ -146,7 +158,7 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
                 quantity: ""
             } );
             setProductName( [] );
-            setIsSubmitting(false);
+            setIsSubmitting( false );
         } catch ( error ) {
             console.log( error );
             toast.error( "Falha ao conectar com o servidor" );
@@ -154,7 +166,7 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
     };
 
     const updateProduct = async ( event: { preventDefault: () => void; } ) => {
-        setIsSubmitting(true);
+        setIsSubmitting( true );
         try {
             event.preventDefault();
             const formData = new FormData();
@@ -171,7 +183,7 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
 
             getProductList();
             setPopUp( null );
-            setIsSubmitting(false);
+            setIsSubmitting( false );
             setProductData( {
                 name: "",
                 image: null,
@@ -187,7 +199,7 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
     };
 
     const updateKit = async ( event: { preventDefault: () => void; } ) => {
-        setIsSubmitting(true);
+        setIsSubmitting( true );
         try {
             event.preventDefault();
             const formData = new FormData();
@@ -203,7 +215,7 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
             getKitList();
             setPopUp( null );
             setProductName( [] );
-            setIsSubmitting(false);
+            setIsSubmitting( false );
             setKitData( {
                 image: null,
                 nameOfProducts: [ "" ],
@@ -217,7 +229,7 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
     };
 
     const updateMagazineData = async ( event: { preventDefault: () => void; } ) => {
-        setIsSubmitting(true);
+        setIsSubmitting( true );
 
         try {
             event.preventDefault();
@@ -239,7 +251,7 @@ export const AdminContextProvider = ( props: AdminContextProviderProps ) => {
 
             getMagazineList();
             setPopUp( null );
-            setIsSubmitting(false);
+            setIsSubmitting( false );
             setMagazineData( {
                 currentCycle: "",
                 startOfCycle: "",

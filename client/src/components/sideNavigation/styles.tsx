@@ -83,7 +83,7 @@ export const Ul = styled.ul`
         justify-content: space-between;
         transition: .3s ease-in-out;
         
-        &:hover {
+        &:hover, &.selected {
             background-color: ${ ( { theme } ) => theme.color };
             color: #fff;
         }

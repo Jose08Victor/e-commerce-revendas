@@ -7,7 +7,11 @@ export const Bag = () => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
-    const { setIsBag, inTheBag } = adminContext;
+    const { setIsBag, inTheBag, setInTheBag } = adminContext;
+
+    const handleRemoveItem = ( id: string ) => {
+        setInTheBag( inTheBag.filter( ( product ) => product._id !== id ) );
+    };
 
     return (
         <Background>
@@ -28,7 +32,9 @@ export const Bag = () => {
                                     <div className="product-title-container">
                                         <h3>{ product.name }</h3>
 
-                                        <TrashCanSVG />
+                                        <div onClick={() => handleRemoveItem(product._id)}>
+                                            <TrashCanSVG />
+                                        </div>
                                     </div>
 
                                     <div className="price-container">

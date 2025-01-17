@@ -9,7 +9,7 @@ export const Header = () => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
-    const { theme, setTheme, isBag, isNav, setIsNav } = adminContext;
+    const { theme, setTheme, isBag, isNav, setIsNav, brand, setBrand, category, setCategory } = adminContext;
 
     return (
         <HeaderContainer >
@@ -34,21 +34,61 @@ export const Header = () => {
             </Nav>
 
             <Ul>
-                <li onClick={ () => setTheme( "avonColor" ) } className={ theme === "avonColor" ? "active" : "" }>Produtos Avon</li>
+                <li onClick={ () => {
+                    setTheme( "avonColor" )
+                    setBrand( "avon" )
+                } } className={ theme === "avonColor" ? "active" : "" }>Produtos Avon</li>
 
-                <li onClick={ () => setTheme( "naturaColor" ) } className={ theme === "naturaColor" ? "active" : "" }>Produtos Natura</li>
+                <li onClick={ () => {
+                    setTheme( "naturaColor" )
+                    setBrand( "natura" )
+                } } className={ theme === "naturaColor" ? "active" : "" }>Produtos Natura</li>
             </Ul>
 
             <CategoryField>
-                <li>Perfumes</li>
-                <li>Perfumes</li>
-                <li>Perfumes</li>
-                <li>Perfumes</li>
-                <li>Perfumes</li>
-                <li>Perfumes</li>
-                <li>Perfumes</li>
-                <li>Perfumes</li>
-                <li>Perfumes</li>
+                { brand === "avon" ?
+                    <>
+                        <li onClick={ () => setCategory( "Perfumes" ) }
+                            className={ category === "Perfumes" ? "selected" : "" }>Perfumes</li>
+
+                        <li onClick={ () => setCategory( "Kits" ) }
+                            className={ category === "Kits" ? "selected" : "" }>Kits</li>
+
+                        <li onClick={ () => setCategory( "Rosto" ) }
+                            className={ category === "Rosto" ? "selected" : "" }>Rosto</li>
+
+                        <li onClick={ () => setCategory( "Lábios" ) }
+                            className={ category === "Lábios" ? "selected" : "" }>Lábios</li>
+
+                        <li onClick={ () => setCategory( "Olhos" ) }
+                            className={ category === "Olhos" ? "selected" : "" }>Olhos</li>
+
+                        <li onClick={ () => setCategory( "Unhas" ) }
+                            className={ category === "Unhas" ? "selected" : "" }>Unhas</li>
+
+                        <li onClick={ () => setCategory( "Desodorantes" ) }
+                            className={ category === "Desodorantes" ? "selected" : "" }>Desodorantes</li>
+
+                        <li onClick={ () => setCategory( "Cuidados Diários" ) }
+                            className={ category === "Cuidados Diários" ? "selected" : "" }>Cuidados Diários</li>
+
+                        <li onClick={ () => setCategory( "Casa&Estilo" ) }
+                            className={ category === "Casa&Estilo" ? "selected" : "" }>Casa & Estilo</li>
+                    </>
+                    :
+                    <>
+                        <li onClick={ () => setCategory( "Perfumes" ) }
+                            className={ category === "Perfumes" ? "selected" : "" }>Perfumes</li>
+
+                        <li onClick={ () => setCategory( "Kits" ) }
+                            className={ category === "Kits" ? "selected" : "" }>Kits</li>
+
+                        <li onClick={ () => setCategory( "Cuidados Diários" ) }
+                            className={ category === "Cuidados Diários" ? "selected" : "" }>Cuidados Diários</li>
+
+                        <li onClick={ () => setCategory( "Maquiagem" ) }
+                            className={ category === "Maquiagem" ? "selected" : "" }>Maquiagem</li>
+                    </> }
             </CategoryField>
 
             { isNav && <SideNavigation /> }

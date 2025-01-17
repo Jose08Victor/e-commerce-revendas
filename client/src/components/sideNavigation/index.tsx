@@ -9,7 +9,7 @@ export const SideNavigation = () => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
-    const { setIsNav, theme, setTheme } = adminContext;
+    const { setIsNav, theme, setTheme, brand, setBrand, category, setCategory } = adminContext;
 
     return (
         <Nav>
@@ -19,24 +19,65 @@ export const SideNavigation = () => {
                     <MagnifyingGlassSVG />
                 </Form>
 
-                <p onClick={() => setIsNav(false)}>x</p>
+                <p onClick={ () => setIsNav( false ) }>x</p>
             </Div>
 
             <ImgContainer>
-                <img onClick={() => setTheme("avonColor")} className={theme === "avonColor" ? "active" : ""} src={ avonIcon } alt="" />
+                <img onClick={ () => {
+                    setTheme( "avonColor" )
+                    setBrand( "avon" )
+                } } className={ theme === "avonColor" ? "active" : "" } src={ avonIcon } alt="" />
 
-                <img onClick={() => setTheme("naturaColor")} className={theme === "naturaColor" ? "active" : ""} src={ naturaIcon } alt="" />
+                <img onClick={ () => {
+                    setTheme( "naturaColor" )
+                    setBrand( "natura" )
+                } } className={ theme === "naturaColor" ? "active" : "" } src={ naturaIcon } alt="" />
             </ImgContainer>
 
             <Ul>
-                <li>perfumes</li>
-                <li>kits</li>
-                <li>maquiagem</li>
-                <li>batom</li>
-                <li>colar</li>
-                <li>brincos</li>
-                <li>aneís</li>
-                <li>sandálias</li>
+                { brand === "avon" ?
+                    <>
+                        <li onClick={ () => setCategory( "Perfumes" ) }
+                            className={ category === "Perfumes" ? "selected" : "" }>Perfumes</li>
+
+                        <li onClick={ () => setCategory( "Kits" ) }
+                            className={ category === "Kits" ? "selected" : "" }>Kits</li>
+
+                        <li onClick={ () => setCategory( "Rosto" ) }
+                            className={ category === "Rosto" ? "selected" : "" }>Rosto</li>
+
+                        <li onClick={ () => setCategory( "Lábios" ) }
+                            className={ category === "Lábios" ? "selected" : "" }>Lábios</li>
+
+                        <li onClick={ () => setCategory( "Olhos" ) }
+                            className={ category === "Olhos" ? "selected" : "" }>Olhos</li>
+
+                        <li onClick={ () => setCategory( "Unhas" ) }
+                            className={ category === "Unhas" ? "selected" : "" }>Unhas</li>
+
+                        <li onClick={ () => setCategory( "Desodorantes" ) }
+                            className={ category === "Desodorantes" ? "selected" : "" }>Desodorantes</li>
+
+                        <li onClick={ () => setCategory( "Cuidados Diários" ) }
+                            className={ category === "Cuidados Diários" ? "selected" : "" }>Cuidados Diários</li>
+
+                        <li onClick={ () => setCategory( "Casa&Estilo" ) }
+                            className={ category === "Casa&Estilo" ? "selected" : "" }>Casa & Estilo</li>
+                    </>
+                    :
+                    <>
+                        <li onClick={ () => setCategory( "Perfumes" ) }
+                            className={ category === "Perfumes" ? "selected" : "" }>Perfumes</li>
+
+                        <li onClick={ () => setCategory( "Kits" ) }
+                            className={ category === "Kits" ? "selected" : "" }>Kits</li>
+
+                        <li onClick={ () => setCategory( "Cuidados Diários" ) }
+                            className={ category === "Cuidados Diários" ? "selected" : "" }>Cuidados Diários</li>
+
+                        <li onClick={ () => setCategory( "Maquiagem" ) }
+                            className={ category === "Maquiagem" ? "selected" : "" }>Maquiagem</li>
+                    </> }
             </Ul>
 
             <LoginContainer>

@@ -13,12 +13,7 @@ export const BagContainer = styled.div`
     height: 100vh;
     width: 460px;
     right: 0;
-    background-color: aliceblue;
-    transition: 1s ease-in-out;
-
-    svg {
-        width: 100%;
-    }
+    background-color: #fff;
 
     @media (max-width: 500px) {
         width: 100%;
@@ -47,6 +42,7 @@ export const BagContainer = styled.div`
                 height: 100px;
                 justify-content: space-between;
                 padding: 6px 12px;  
+                width: 100%;
 
                 .product-title-container {
                     display: flex;
@@ -62,14 +58,6 @@ export const BagContainer = styled.div`
                         -webkit-line-clamp: 2;
                         -webkit-box-orient: vertical;
                     }
-
-                    svg {
-                        width: 17.5px;
-                        position: relative;
-                        right: -11px;
-                        top: -5px;
-                        fill: ${ ( { theme } ) => theme.color };
-                    }
                 }
 
                 .price-container {
@@ -81,7 +69,6 @@ export const BagContainer = styled.div`
                         font-weight: 800;
                     } 
 
-
                     div {
                         display: flex;
 
@@ -91,7 +78,12 @@ export const BagContainer = styled.div`
                             font-size: 22px;
                             line-height: 32px;
                             border: 1px solid ${ ( { theme } ) => theme.color };
-                            background-color: aliceblue;
+                            background-color: #fff;
+                            cursor: pointer;
+
+                            &:hover {
+                                font-size: 30px;
+                            }
                         }
 
                         span {
@@ -100,6 +92,7 @@ export const BagContainer = styled.div`
                             border-bottom: 1px solid ${ ( { theme } ) => theme.color };
                             line-height: 20px;
                             font-weight: 700;
+                            cursor: default;
                         }
                     }
                 }
@@ -128,7 +121,13 @@ export const TitleContainer = styled.div`
         position: absolute;
         top: -3px;
         right: 10px;
-        color: ${ ( { theme } ) => theme.color };
+        cursor: pointer;
+        transition: .3s ease-in-out; 
+
+        &:hover {
+            transform: scale(1.2);
+            color: ${ ( { theme } ) => theme.color };
+        }
     }
 `
 
@@ -154,14 +153,29 @@ export const PriceContainer = styled.div`
         letter-spacing: 2px;
         border-radius: 20px;
         border: 1px solid ${ ( { theme } ) => theme.color };
-        color: ${ ( { theme } ) => theme.color };
+        background-color: ${ ( { theme } ) => theme.color }; 
+        color: #fff;
+        cursor: pointer;
+        transition: .3s ease-in-out; 
+
+        &:hover {
+            background-color: #fff;
+            color: ${ ( { theme } ) => theme.color };
+        }
     }
 
     .back-to-products {
         border: none;
         letter-spacing: 3px;
         font-weight: 600;
-        color: ${ ( { theme } ) => theme.color };
+        cursor: pointer;
+        transition: .3s ease-in-out;
+        background-color: #fff;
+
+        &:hover {
+            transform: scale(1.03);
+            color: ${ ( { theme } ) => theme.color };
+        }
     }
 `
 

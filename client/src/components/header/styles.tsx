@@ -175,6 +175,13 @@ export const CategoryField = styled.ul`
             border: 2px solid ${ ( { theme } ) => theme.color };
             cursor: pointer;
         }
+
+        &.selected {
+            color: ${ ( { theme } ) => theme.color };
+            background-color: #fff;
+            border: 2px solid ${ ( { theme } ) => theme.color };
+            transform: scale(1.11);
+        }
     }
 
     @media (min-width: 1100px) {

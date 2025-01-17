@@ -68,6 +68,12 @@ export const CategoryField = styled.ul`
             border: 2px solid ${ ( { theme } ) => theme.color };
             cursor: pointer;
         }
+
+        &.selected {
+            color: ${ ( { theme } ) => theme.color };
+            background-color: #fff;
+            border: 2px solid ${ ( { theme } ) => theme.color };
+        }
     }
 
     @media (max-width: 500px) {
@@ -197,6 +203,7 @@ export const Section = styled.section`
                 width: 100%;
                 border-radius: 10px;
                 margin-bottom: 15px;
+                border: 1px solid ${ ( { theme } ) => theme.backgroundColor };
             }
 
             div {

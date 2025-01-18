@@ -93,4 +93,5 @@ export interface Product {
     category: string;
     quantity: number;
     validity: string;
+    currentQuantity: number;
 }

@@ -13,6 +13,26 @@ export const Bag = () => {
         setInTheBag( inTheBag.filter( ( product ) => product._id !== id ) );
     };
 
+    const handleIncrementQuantity = ( id: string ) => {
+        setInTheBag(
+            inTheBag.map( ( product ) =>
+                product._id === id && product.currentQuantity < product.quantity
+                    ? { ...product, currentQuantity: product.currentQuantity + 1 }
+                    : product
+            )
+        );
+    };
+
+    const handleDecrementQuantity = ( id: string ) => {
+        setInTheBag(
+            inTheBag.map( ( product ) =>
+                product._id === id && product.currentQuantity > 1
+                    ? { ...product, currentQuantity: product.currentQuantity - 1 }
+                    : product
+            )
+        );
+    };
+
     return (
         <Background>
             <BagContainer>
@@ -32,21 +52,21 @@ export const Bag = () => {
                                     <div className="product-title-container">
                                         <h3>{ product.name }</h3>
 
-                                        <div onClick={() => handleRemoveItem(product._id)}>
+                                        <div onClick={ () => handleRemoveItem( product._id ) }>
                                             <TrashCanSVG />
                                         </div>
                                     </div>
 
                                     <div className="price-container">
                                         <div>
-                                            <button>+</button>
+                                            <button onClick={ () => handleIncrementQuantity( product._id ) }>+</button>
 
-                                            <span>1</span>
+                                            <span>{ product.currentQuantity }</span>
 
-                                            <button>−</button>
+                                            <button onClick={ () => handleDecrementQuantity( product._id ) }>−</button>
                                         </div>
 
-                                        <p>{ Intl.NumberFormat( 'pt-BR', { style: 'currency', currency: 'BRL' } ).format( product.price ) }</p>
+                                        <p>{ Intl.NumberFormat( 'pt-BR', { style: 'currency', currency: 'BRL' } ).format( product.price * product.currentQuantity ) }</p>
                                     </div>
                                 </div>
                             </li>
@@ -57,21 +77,13 @@ export const Bag = () => {
                 <PriceContainer>
                     <Prices>
                         <div>
-                            <h3>Subtotal :</h3>
-                            <p>R$ 90,00</p>
-                        </div>
-
-                        <div>
-                            <h3>Descontos :</h3>
-                            <p>R$ -30,00</p>
-                        </div>
-
-                        <div>
                             <h3>Total :</h3>
-                            <p>R$ 60,00</p>
+                            <p>{ Intl.NumberFormat( 'pt-BR', { style: 'currency', currency: 'BRL' } ).format( inTheBag.reduce( ( total, price ) => total + price.price * price.currentQuantity, 0 ) ) }</p>
                         </div>
 
-                        <span>Ou até 3x sem juros de R$ 20,00</span>
+                        <span>Desconto de R$ 20 á vista pelo pix</span>
+
+                        <span>Ou até 3x sem juros no cartão</span>
                     </Prices>
 
                     <button className="continue">Continuar</button>

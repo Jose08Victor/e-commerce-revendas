@@ -9,7 +9,7 @@ export const Header = () => {
     const adminContext = useContext( AdminContext );
     if ( !adminContext ) throw new Error( 'useContext deve ser usado dentro de um AdminContextProvider' );
 
-    const { theme, setTheme, isBag, isNav, setIsNav, brand, setBrand, category, setCategory } = adminContext;
+    const { theme, setTheme, isBag, isNav, setIsNav, brand, setBrand, category, setCategory, inTheBag } = adminContext;
 
     return (
         <HeaderContainer >
@@ -27,7 +27,7 @@ export const Header = () => {
 
                 <SVGContainer>
                     <BagSVG />
-                    <Span>0</Span>
+                    <Span>{inTheBag.length}</Span>
 
                     <ProfileSVG />
                 </SVGContainer>

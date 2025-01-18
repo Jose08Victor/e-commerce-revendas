@@ -20,6 +20,22 @@ export const Home = () => {
     setCategory( "Perfumes" );
   }, [ brand ] );
 
+  const handleAddToBag = ( product: {
+    _id: string;
+    name: string;
+    imageName: string;
+    imageURL: string;
+    price: number;
+    category: string;
+    quantity: number;
+    validity: string;
+  } ) => {
+    const isProductInBag = inTheBag.some( ( item ) => item._id === product._id );
+
+    !isProductInBag ? setInTheBag( [ ...inTheBag, { ...product, currentQuantity: 1 } ] )
+      : console.log( "Produto já está na sacola." );
+  };
+
   return (
     <Main>
       <Ul>
@@ -83,7 +99,7 @@ export const Home = () => {
       { brand === "avon" ? <Banner src={ banner_avon } alt="Avon Banner" /> :
         <Banner src={ banner_natura } alt="Natura Banner" /> }
 
-      <TitleOneContainer onClick={() => console.log(inTheBag)}>
+      <TitleOneContainer onClick={ () => console.log( inTheBag ) }>
         <TitleOne >{ brand === "avon" ? "Avon" : "Natura" } / { category } :</TitleOne>
 
         <TitleTwoContainer>
@@ -110,7 +126,7 @@ export const Home = () => {
                     <span>R$20 de desconto no pix</span>
                   </div>
 
-                  <div onClick={ () => setInTheBag([...inTheBag, product]) }>
+                  <div onClick={ () => handleAddToBag( product ) }>
                     <AddToBagSVG />
                   </div>
                 </li>
@@ -130,7 +146,7 @@ export const Home = () => {
                       <span>R$20 de desconto no pix</span>
                     </div>
 
-                    <div onClick={ () => setInTheBag([...inTheBag, product]) }>
+                    <div onClick={ () => handleAddToBag( product ) }>
                       <AddToBagSVG />
                     </div>
                   </li>
